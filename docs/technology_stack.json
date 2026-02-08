@@ -1,0 +1,21 @@
+{
+  "parts": [
+    {
+      "part_id": "web",
+      "technology_table": [
+        { "category": "Framework", "technology": "Next.js", "version": "16.0.8", "justification": "Core application framework (App Router)" },
+        { "category": "Language", "technology": "TypeScript", "version": "5.9.3", "justification": "Static typing" },
+        { "category": "UI Library", "technology": "React", "version": "19.2.1", "justification": "Component library" },
+        { "category": "Styling", "technology": "Tailwind CSS", "version": "4.1.17", "justification": "Utility-first CSS" },
+        { "category": "Database", "technology": "Prisma", "version": "7.1.0", "justification": "ORM for Postgres" },
+        { "category": "Auth", "technology": "NextAuth.js", "version": "5.0.0-beta.30", "justification": "Authentication" },
+        { "category": "State Management", "technology": "Zustand", "version": "5.0.9", "justification": "Global client state" },
+        { "category": "Validation", "technology": "Zod", "version": "4.1.13", "justification": "Schema validation" },
+        { "category": "Forms", "technology": "React Hook Form", "version": "7.68.0", "justification": "Form handling" },
+        { "category": "Monitoring", "technology": "Sentry", "version": "10.32.1", "justification": "Error tracking" }
+      ],
+      "architecture_pattern": "Component-Based (Server Components + Server Actions)",
+      "primary_framework": "Next.js"
+    }
+  ]
+}

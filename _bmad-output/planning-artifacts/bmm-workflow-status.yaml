@@ -1,0 +1,99 @@
+# Workflow Status Template
+
+# This tracks progress through BMM methodology Analysis, Planning, and Solutioning phases.
+# Implementation phase is tracked separately in sprint-status.yaml
+
+# STATUS DEFINITIONS:
+# ==================
+# Initial Status (before completion):
+#   - required: Must be completed to progress
+#   - optional: Can be completed but not required
+#   - recommended: Strongly suggested but not required
+#   - conditional: Required only if certain conditions met (e.g., if_has_ui)
+#
+# Completion Status:
+#   - {file-path}: File created/found (e.g., "docs/product-brief.md")
+#   - skipped: Optional/conditional workflow that was skipped
+
+generated: "2026-01-01"
+project: "buildr"
+project_type: "brownfield"
+selected_track: "bmad-method"
+field_type: "brownfield"
+workflow_path: "_bmad/bmm/workflows/workflow-status/paths/method-brownfield.yaml"
+workflow_status:
+  - id: "document-project"
+    phase: "Documentation"
+    status: "docs/index.md"
+    description: "Comprehensive project documentation"
+    agent: "analyst"
+    command: "/bmad:bmm:workflows:document-project"
+
+  - id: "brainstorm-project"
+    phase: "Analysis"
+    status: "_bmad-output/analysis/brainstorming-session-2026-01-01.md"
+    description: "Brainstorming session"
+    agent: "analyst"
+    command: "/bmad:bmm:workflows:brainstorming"
+
+  - id: "research"
+    phase: "Analysis"
+    status: "_bmad-output/planning-artifacts/research/technical-wizard-architecture-research-2026-01-01.md"
+    description: "Domain analysis"
+    agent: "analyst"
+    command: "/bmad:bmm:workflows:research"
+
+  - id: "product-brief"
+    phase: "Analysis"
+    status: "skipped"
+
+  - id: "prd"
+    phase: "Planning"
+    status: "_bmad-output/planning-artifacts/prd.md"
+    description: "Product Requirements Document"
+    agent: "pm"
+    command: "/bmad:bmm:workflows:create-prd"
+
+  - id: "create-ux-design"
+    phase: "Planning"
+    status: "complete"
+    output_file: "_bmad-output/planning-artifacts/ux-design-specification.md"
+    completed_at: "2026-01-01T17:58:00+01:00"
+    description: "UX Design"
+    agent: "ux-designer"
+    command: "/bmad:bmm:workflows:create-ux-design"
+
+  - id: "create-architecture"
+    phase: "Solutioning"
+    status: "_bmad-output/planning-artifacts/architecture.md"
+    description: "System architecture"
+    agent: "architect"
+    command: "/bmad:bmm:workflows:create-architecture"
+
+  - id: "create-epics-and-stories"
+    phase: "Solutioning"
+    status: "_bmad-output/planning-artifacts/epics.md"
+    description: "Epics and User Stories"
+    agent: "pm"
+    command: "/bmad:bmm:workflows:create-epics-and-stories"
+
+  - id: "test-design"
+    phase: "Solutioning"
+    status: "_bmad-output/planning-artifacts/test-design-epic-1.md"
+    description: "Testability review"
+    agent: "tea"
+    command: "/bmad:bmm:workflows:test-design"
+
+  - id: "implementation-readiness"
+    phase: "Solutioning"
+    status: "_bmad-output/planning-artifacts/implementation-readiness-report-2026-01-04.md"
+    description: "Readiness Check"
+    agent: "architect"
+    command: "/bmad:bmm:workflows:implementation-readiness"
+
+  - id: "sprint-planning"
+    phase: "Implementation"
+    status: "_bmad-output/implementation-artifacts/sprint-status.yaml"
+    description: "Sprint Planning"
+    agent: "sm"
+    command: "/bmad:bmm:workflows:sprint-planning"

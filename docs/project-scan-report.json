@@ -1,0 +1,73 @@
+{
+  "workflow_version": "1.2.0",
+  "timestamps": {
+    "started": "2026-01-01T14:12:20+01:00",
+    "last_updated": "2026-01-01T14:19:00+01:00",
+    "completed": "2026-01-01T14:19:00+01:00"
+  },
+  "mode": "initial_scan",
+  "scan_level": "deep",
+  "project_root": "c:\\AI2025\\buildr",
+  "output_folder": "c:\\AI2025\\buildr\\docs",
+  "completed_steps": [
+    {
+      "step": "step_1",
+      "status": "completed",
+      "timestamp": "2026-01-01T14:13:30+01:00",
+      "summary": "Classified as monolith with 1 parts"
+    },
+    {
+      "step": "step_2",
+      "status": "completed",
+      "timestamp": "2026-01-01T14:14:17+01:00",
+      "summary": "Found 49 existing docs"
+    },
+    {
+      "step": "step_3",
+      "status": "completed",
+      "timestamp": "2026-01-01T14:14:17+01:00",
+      "summary": "Tech stack: Next.js 16"
+    },
+    {
+      "step": "step_10",
+      "status": "completed",
+      "timestamp": "2026-01-01T14:18:50+01:00",
+      "summary": "Master index generated"
+    },
+    {
+      "step": "step_12",
+      "status": "completed",
+      "timestamp": "2026-01-01T14:19:00+01:00",
+      "summary": "Workflow complete"
+    }
+  ],
+  "current_step": "completed",
+  "findings": {
+    "project_classification": "Monolith application (web)",
+    "project_types": [
+      {
+        "part_id": "web",
+        "project_type_id": "web",
+        "display_name": "Buildr Web App"
+      }
+    ],
+    "technology_stack": "Next.js 16, React 19, Prisma, Tailwind"
+  },
+  "outputs_generated": [
+    "project-scan-report.json",
+    "project_parts_metadata.json",
+    "existing_documentation_inventory.json",
+    "technology_stack.json",
+    "api-contracts-web.md",
+    "data-models-web.md",
+    "ui-component-inventory-web.md",
+    "state-management-web.md",
+    "source-tree-analysis.md",
+    "development-guide-web.md",
+    "architecture-web.md",
+    "project-overview.md",
+    "deployment-guide.md",
+    "index.md"
+  ],
+  "resume_instructions": "Workflow completed"
+}

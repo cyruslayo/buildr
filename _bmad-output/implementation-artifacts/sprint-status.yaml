@@ -1,0 +1,81 @@
+# Generated: 2026-01-04
+# Project: buildr
+# Tracking System: file-system
+# Story Location: _bmad-output/implementation-artifacts
+
+# STATUS DEFINITIONS:
+# ==================
+# Epic Status:
+#   - backlog: Epic not yet started
+#   - in-progress: Epic actively being worked on
+#   - done: All stories in epic completed
+#
+# Story Status:
+#   - backlog: Story only exists in epic file
+#   - ready-for-dev: Story file created in stories folder
+#   - in-progress: Developer actively working on implementation
+#   - review: Ready for code review
+#   - done: Story completed
+#
+# Retrospective Status:
+#   - optional: Can be completed but not required
+#   - done: Retrospective has been completed
+
+generated: "2026-01-04"
+project: "buildr"
+tracking_system: "file-system"
+story_location: "_bmad-output/implementation-artifacts"
+
+development_status:
+  # Epic 1: Foundation & Authentication (4 stories)
+  epic-1: done
+  1-1-user-registration-with-ndpr-consent: done
+  1-2-user-login-session-management: done
+  1-3-kyc-document-upload-for-verification: done
+  1-4-verified-badge-display: done
+  epic-1-retrospective: optional
+
+  # Epic 2: Property Wizard - Create Listings (6 stories)
+  epic-2: done
+  2-1-wizard-shell-step-navigation: done
+  2-2-localstorage-draft-persistence: done
+  2-3-background-sync-with-conflict-resolution: done
+  2-4-property-details-entry-spacious-mode: done
+  2-5-amenities-description-entry-dense-mode: done
+  2-6-publish-validation-live-link-generation: done
+  epic-2-retrospective: optional
+
+  # Epic 3: Asset Governance - Image Pipeline (5 stories)
+  epic-3: done
+  3-1-direct-to-cloudinary-image-upload: done
+  3-2-automatic-4-3-aspect-ratio-cropping: done
+  3-3-image-size-validation-exif-stripping: done
+  3-4-style-preset-selection-colors: done
+  3-5-font-pairing-selection: done
+  epic-3-retrospective: optional
+
+  # Epic 4: Dashboard & Property Management (4 stories)
+  epic-4: done
+  4-1-dashboard-listing-overview: done
+  4-2-unpublish-live-page: done
+  4-3-soft-delete-draft-pages: done
+  4-4-responsive-dashboard-layout: done
+  epic-4-retrospective: optional
+
+  # Epic 5: Team Management - Agency Collaboration (6 stories)
+  epic-5: done
+  5-1-invite-team-members: done
+  5-2-accept-team-invitation: done
+  5-3-assign-team-roles-admin-editor: done
+  5-4-remove-team-members: done
+  5-5-lock-templates-admin-only: done
+  5-6-duplicate-team-pages: done
+  epic-5-retrospective: optional
+
+  # Epic 6: Polish & Performance - 3G Excellence (4 stories)
+  epic-6: done
+  6-1-pwa-service-worker-app-shell: done
+  6-2-lighthouse-performance-optimization: done
+  6-3-wcag-2-1-aa-accessibility-compliance: done
+  6-4-stack-stability-downgrade-verification: done
+  epic-6-retrospective: optional

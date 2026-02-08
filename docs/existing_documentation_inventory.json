@@ -1,0 +1,40 @@
+{
+  "existing_docs": [
+    {
+      "path": "docs/project-docs/01-PRD.md",
+      "type": "prd",
+      "description": "Product Requirements Document"
+    },
+    {
+      "path": "docs/project-docs/02-TECHNICAL-SPEC.md",
+      "type": "technical_spec",
+      "description": "Technical Specification"
+    },
+    {
+      "path": "docs/project-docs/03-DESIGN-SYSTEM.md",
+      "type": "design_system",
+      "description": "Design System Documentation"
+    },
+    {
+      "path": "docs/project-docs/05-API-REFERENCE.md",
+      "type": "api",
+      "description": "API Reference"
+    },
+    {
+      "path": "docs/project-docs/06-TESTING-STRATEGY.md",
+      "type": "testing",
+      "description": "Testing Strategy"
+    },
+    {
+      "path": "docs/project-docs/README.md",
+      "type": "readme",
+      "description": "Documentation Index"
+    },
+    {
+      "path": "docs/reference-doc/*",
+      "type": "reference",
+      "description": "40+ reference documents and critiques"
+    }
+  ],
+  "user_context": "None provided"
+}

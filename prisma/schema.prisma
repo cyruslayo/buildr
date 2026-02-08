@@ -1,0 +1,217 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id            String       @id @default(cuid())
+  email         String       @unique
+  name          String?
+  password      String?      // For credentials auth
+  emailVerified DateTime?
+  image         String?
+  ndprConsentAt DateTime?    // Timestamp of NDPR consent (NFR6)
+  kycDocument   String?      // URL/path to uploaded KYC document
+  kycStatus     KycStatus    @default(NONE) // Verification status
+  accounts      Account[]
+  sessions      Session[]
+  projects      Project[]
+  properties    Property[]   // Added for Property Wizard (Epic 2)
+  consentLogs   ConsentLog[]
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  role          Role         @default(USER)
+  teamId        String?
+  team          Team?        @relation(fields: [teamId], references: [id])
+}
+
+enum KycStatus {
+  NONE       // No document uploaded
+  PENDING    // Document uploaded, awaiting review
+  VERIFIED   // Document approved
+  REJECTED   // Document rejected
+}
+
+enum Role {
+  USER
+  ADMIN
+  AGENT
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Project {
+  id        String    @id @default(cuid())
+  name      String
+  code      String    @db.Text
+  pageType  String
+  userId    String
+  user      User      @relation(fields: [userId], references: [id])
+  versions  Version[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Version {
+  id        String   @id @default(cuid())
+  code      String   @db.Text
+  message   String?
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+model Lead {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  source    String?  // Where the lead came from (landing, wizard, etc.)
+  createdAt DateTime @default(now())
+}
+
+// NDPR Compliance: Audit log for user consent (NFR6)
+model ConsentLog {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  consentType String   // e.g., "NDPR_CONTACT", "MARKETING", "PRIVACY_POLICY"
+  ipAddress   String?  // IP address for audit trail
+  userAgent   String?  // Browser/device info
+  granted     Boolean  @default(true)
+  createdAt   DateTime @default(now())
+
+  @@index([userId])
+  @@index([consentType])
+}
+
+model Property {
+  id          String         @id @default(cuid())
+  title       String?
+  price       Float?         // Stores amount in Naira
+  location    String?
+  beds        Int?           // Number of bedrooms
+  baths       Int?           // Number of bathrooms
+  sqm         Float?         // Area in square meters
+  amenities   String[]       @default([])
+  description String?        @db.Text
+  status      PropertyStatus @default(DRAFT)
+  slug        String?        @unique // Added for live link generation (Epic 2.6)
+  
+  templateId  String?        // ID of the selected design template
+  stylePreset String?        // Selected color/style preset
+  fontPairing String?        // Selected font pairing
+  images      String[]       @default([]) // URLs/paths to property images
+  
+  userId      String
+  user        User           @relation(fields: [userId], references: [id])
+  teamId      String?
+  team        Team?          @relation(fields: [teamId], references: [id])
+  
+  publishedAt DateTime?      // Timestamp for live listings
+  deletedAt   DateTime?      // Soft-delete support (Story 4.3)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  @@index([userId])
+  @@index([teamId])
+  @@index([slug])
+  @@index([deletedAt])
+}
+
+model Team {
+  id              String           @id @default(cuid())
+  name            String
+  members         User[]
+  properties      Property[]
+  invitations     Invitation[]
+  lockedTemplates LockedTemplate[]
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+}
+
+model LockedTemplate {
+  id         String   @id @default(cuid())
+  templateId String   // e.g., 'tmpl_listing_luxury_ng'
+  teamId     String
+  team       Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+
+  @@unique([templateId, teamId])
+  @@index([teamId])
+}
+
+model Invitation {
+  id        String           @id @default(cuid())
+  email     String
+  role      TeamRole         @default(EDITOR)
+  token     String           @unique
+  teamId    String
+  team      Team             @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  status    InvitationStatus @default(PENDING)
+  expiresAt DateTime
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+
+  @@index([teamId])
+  @@index([token])
+}
+
+enum TeamRole {
+  ADMIN
+  EDITOR
+}
+
+enum InvitationStatus {
+  PENDING
+  ACCEPTED
+  EXPIRED
+}
+
+
+enum PropertyStatus {
+  DRAFT
+  PUBLISHED
+}

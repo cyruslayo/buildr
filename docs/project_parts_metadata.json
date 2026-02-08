@@ -1,0 +1,12 @@
+{
+  "repository_type": "monolith",
+  "parts": [
+    {
+      "part_id": "web",
+      "root_path": "c:\\AI2025\\buildr",
+      "project_type_id": "web",
+      "display_name": "Buildr Web App"
+    }
+  ],
+  "integration_points": []
+}
