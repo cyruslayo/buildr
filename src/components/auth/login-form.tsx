@@ -113,8 +113,13 @@ export function LoginForm() {
         </div>
       )}
 
-      <Button type="submit" data-testid="login-button" className="w-full" disabled={isLoading}>
-        {isLoading ? 'Signing in...' : 'Sign In'}
+      <Button
+        type="submit"
+        data-testid="login-button"
+        className="w-full"
+        isLoading={isLoading}
+      >
+        Sign In
       </Button>
 
       <p className="text-center text-sm text-muted-foreground">

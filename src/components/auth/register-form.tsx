@@ -164,8 +164,13 @@ export function RegisterForm({ onSuccess }: RegisterFormProps) {
         </div>
       )}
 
-      <Button type="submit" data-testid="register-button" className="w-full" disabled={isLoading}>
-        {isLoading ? 'Creating account...' : 'Sign Up'}
+      <Button
+        type="submit"
+        data-testid="register-button"
+        className="w-full"
+        isLoading={isLoading}
+      >
+        Sign Up
       </Button>
 
       <p className="text-center text-sm text-muted-foreground">

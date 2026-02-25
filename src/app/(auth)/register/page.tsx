@@ -6,8 +6,8 @@
  * Implements "Lagos Luxury" with emerald gradients and trust signals
  */
 import Link from 'next/link';
-import { ShieldCheck, Zap, CheckCircle } from 'lucide-react';
-import RegisterForm from '@/features/auth/components/register-form';
+import { Zap, CheckCircle } from 'lucide-react';
+import { RegisterForm } from '@/components/auth/register-form';
 
 const BENEFITS = [
   'Create unlimited property pages',
