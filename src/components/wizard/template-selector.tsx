@@ -7,7 +7,8 @@
  */
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Check, Sparkles, Home, Building } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -45,6 +46,32 @@ const categoryLabels: Record<CategoryFilter, string> = {
   shortlet: 'Short-Let',
   estate: 'Estate',
 };
+
+/**
+ * Internal component to handle template thumbnail with error fallback
+ * to preserve the background gradient and icon.
+ */
+function TemplateThumbnail({ src, alt }: { src: string; alt: string }) {
+  const [error, setError] = useState(false);
+
+  // Reset error state if src changes
+  useEffect(() => {
+    setError(false);
+  }, [src]);
+
+  if (error) return null;
+
+  return (
+    <Image
+      src={src}
+      alt={alt}
+      fill
+      className="object-cover"
+      onError={() => setError(true)}
+      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+    />
+  );
+}
 
 /**
  * TemplateSelector - Gallery grid with category filtering
@@ -122,14 +149,9 @@ export function TemplateSelector({
                 {/* Thumbnail placeholder */}
                 <div className="relative h-40 bg-gradient-to-br from-slate-800 to-slate-900 rounded-t-lg overflow-hidden">
                   {template.thumbnail ? (
-                    <img
+                    <TemplateThumbnail
                       src={template.thumbnail}
                       alt={template.name}
-                      className="absolute inset-0 w-full h-full object-cover"
-                      onError={(e) => {
-                        // Fallback to gradient on error
-                        (e.target as HTMLImageElement).style.display = 'none';
-                      }}
                     />
                   ) : null}
                   <div className="absolute inset-0 flex items-center justify-center text-slate-600">
