@@ -5,6 +5,11 @@ import * as React from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 import { Loader2, Send } from 'lucide-react';
 
 export interface PromptInputProps {
@@ -86,25 +91,32 @@ export function PromptInput({
         />
         
         {/* Submit Button */}
-        <Button
-          type="button"
-          size="icon"
-          onClick={handleSubmit}
-          disabled={isLoading || !value.trim()}
-          className={cn(
-            'absolute right-2 top-2',
-            'h-9 w-9',
-            'transition-all duration-300',
-            'hover:scale-105'
-          )}
-          aria-label="Enhance content"
-        >
-          {isLoading ? (
-            <Loader2 className="h-4 w-4 animate-spin" />
-          ) : (
-            <Send className="h-4 w-4" />
-          )}
-        </Button>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              type="button"
+              size="icon"
+              onClick={handleSubmit}
+              disabled={isLoading || !value.trim()}
+              className={cn(
+                'absolute right-2 top-2',
+                'h-9 w-9',
+                'transition-all duration-300',
+                'hover:scale-105'
+              )}
+              aria-label="Enhance content"
+            >
+              {isLoading ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <Send className="h-4 w-4" />
+              )}
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Enhance content</p>
+          </TooltipContent>
+        </Tooltip>
 
         {/* Character Count */}
         <div

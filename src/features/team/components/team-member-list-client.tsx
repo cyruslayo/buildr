@@ -9,6 +9,11 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
+import {
   AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
@@ -82,7 +87,7 @@ export function TeamMemberListClient({ members, currentUserId, isAdmin }: TeamMe
       } else {
         toast.error(result.message || 'Failed to remove member');
       }
-    } catch (error) {
+    } catch {
       toast.error('An unexpected error occurred');
     } finally {
       setRemovePending(false);
@@ -151,20 +156,28 @@ export function TeamMemberListClient({ members, currentUserId, isAdmin }: TeamMe
                       open={openMemberDialogId === member.id} 
                       onOpenChange={(open) => setOpenMemberDialogId(open ? member.id : null)}
                     >
-                      <AlertDialogTrigger asChild>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className={cn(
-                            "h-12 w-12 text-red-500 hover:text-red-600 hover:bg-red-50",
-                            index === 0 && "text-red-400 hover:text-red-300 hover:bg-red-500/10"
-                          )}
-                          disabled={removePending}
-                          data-testid={`remove-member-${member.id}`}
-                        >
-                          <Trash2 className="h-5 w-5" />
-                        </Button>
-                      </AlertDialogTrigger>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <AlertDialogTrigger asChild>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className={cn(
+                                "h-12 w-12 text-red-500 hover:text-red-600 hover:bg-red-50",
+                                index === 0 && "text-red-400 hover:text-red-300 hover:bg-red-500/10"
+                              )}
+                              disabled={removePending}
+                              data-testid={`remove-member-${member.id}`}
+                              aria-label="Remove member"
+                            >
+                              <Trash2 className="h-5 w-5" />
+                            </Button>
+                          </AlertDialogTrigger>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Remove member</p>
+                        </TooltipContent>
+                      </Tooltip>
                       <AlertDialogContent>
                         <AlertDialogHeader>
                           <AlertDialogTitle>Remove Team Member</AlertDialogTitle>
