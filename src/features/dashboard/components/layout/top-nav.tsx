@@ -23,7 +23,7 @@ export function TopNav() {
       {/* Mobile Menu */}
       <Sheet>
         <SheetTrigger asChild>
-          <Button variant="ghost" size="icon" className="md:hidden">
+          <Button variant="ghost" size="icon" className="md:hidden" aria-label="Open menu">
             <Menu />
           </Button>
         </SheetTrigger>
