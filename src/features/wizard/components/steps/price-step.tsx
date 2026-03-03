@@ -4,14 +4,14 @@ import React from 'react';
 import { Label } from '@/components/ui/label';
 import { BigInput } from '../big-input';
 import { useWizardStore } from '../../store/wizard-store';
-import { formatNumberWithCommas, parseNumericValue } from '@/lib/formatters';
+import { formatNumberWithCommas, parseNumericValue, formatCurrencyShorthand } from '@/lib/formatters';
 
 export function PriceStep() {
   const { propertyData, updatePropertyData } = useWizardStore();
 
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const rawValue = parseNumericValue(e.target.value);
-    // Sanity check: prevent extremely large numbers (> 1 Billion)
+    // Sanity check: prevent extremely large numbers
     if (rawValue.length > 12) return; 
     
     const numericValue = rawValue === '' ? 0 : parseInt(rawValue, 10);
@@ -19,6 +19,7 @@ export function PriceStep() {
   };
 
   const displayValue = propertyData.price ? formatNumberWithCommas(propertyData.price) : '';
+  const shorthandValue = propertyData.price ? formatCurrencyShorthand(propertyData.price) : null;
 
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -31,15 +32,27 @@ export function PriceStep() {
         <Label htmlFor="price-input" className="block text-center text-xs font-medium uppercase tracking-widest text-muted-foreground/60">
           Asking Price
         </Label>
-        <BigInput
-          id="price-input"
-          prefix="₦"
-          placeholder="e.g. 150,000,000"
-          value={displayValue}
-          onChange={handlePriceChange}
-          inputMode="numeric"
-          data-testid="price-input"
-        />
+        <div className="space-y-2">
+          <BigInput
+            id="price-input"
+            prefix="₦"
+            placeholder="e.g. 150,000,000"
+            value={displayValue}
+            onChange={handlePriceChange}
+            inputMode="numeric"
+            data-testid="price-input"
+          />
+          {shorthandValue && (
+            <div
+              className="text-center animate-in fade-in slide-in-from-top-1 duration-500"
+              aria-live="polite"
+            >
+              <span className="px-3 py-1 bg-emerald-50 text-emerald-700 text-sm font-bold rounded-full border border-emerald-100">
+                {shorthandValue}
+              </span>
+            </div>
+          )}
+        </div>
       </div>
 
       <div className="text-center text-xs text-muted-foreground/50 uppercase tracking-widest">
