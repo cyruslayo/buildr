@@ -4,21 +4,23 @@ import React from 'react';
 import { Label } from '@/components/ui/label';
 import { BigInput } from '../big-input';
 import { useWizardStore } from '../../store/wizard-store';
-import { formatNumberWithCommas, parseNumericValue } from '@/lib/formatters';
+import { formatNumberWithCommas, parseNumericValue, formatCurrencyShorthand } from '@/lib/formatters';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export function PriceStep() {
   const { propertyData, updatePropertyData } = useWizardStore();
 
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const rawValue = parseNumericValue(e.target.value);
-    // Sanity check: prevent extremely large numbers (> 1 Billion)
-    if (rawValue.length > 12) return; 
+    // Sanity check: prevent extremely large numbers (> 1 Trillion)
+    if (rawValue.length > 15) return;
     
     const numericValue = rawValue === '' ? 0 : parseInt(rawValue, 10);
     updatePropertyData({ price: numericValue });
   };
 
   const displayValue = propertyData.price ? formatNumberWithCommas(propertyData.price) : '';
+  const shorthandValue = propertyData.price ? formatCurrencyShorthand(propertyData.price) : '';
 
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -31,15 +33,32 @@ export function PriceStep() {
         <Label htmlFor="price-input" className="block text-center text-xs font-medium uppercase tracking-widest text-muted-foreground/60">
           Asking Price
         </Label>
-        <BigInput
-          id="price-input"
-          prefix="₦"
-          placeholder="e.g. 150,000,000"
-          value={displayValue}
-          onChange={handlePriceChange}
-          inputMode="numeric"
-          data-testid="price-input"
-        />
+        <div className="space-y-2">
+          <BigInput
+            id="price-input"
+            prefix="₦"
+            placeholder="e.g. 150,000,000"
+            value={displayValue}
+            onChange={handlePriceChange}
+            inputMode="numeric"
+            data-testid="price-input"
+          />
+          <div className="h-6 flex justify-center">
+            <AnimatePresence mode="wait">
+              {shorthandValue && (
+                <motion.span
+                  key={shorthandValue}
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  className="text-sm font-semibold text-primary/70 italic"
+                >
+                  {shorthandValue}
+                </motion.span>
+              )}
+            </AnimatePresence>
+          </div>
+        </div>
       </div>
 
       <div className="text-center text-xs text-muted-foreground/50 uppercase tracking-widest">
