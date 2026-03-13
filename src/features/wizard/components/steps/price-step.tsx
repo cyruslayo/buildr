@@ -1,17 +1,18 @@
 'use client';
 
 import React from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Label } from '@/components/ui/label';
 import { BigInput } from '../big-input';
 import { useWizardStore } from '../../store/wizard-store';
-import { formatNumberWithCommas, parseNumericValue } from '@/lib/formatters';
+import { formatNumberWithCommas, parseNumericValue, formatCurrencyShorthand } from '@/lib/formatters';
 
 export function PriceStep() {
   const { propertyData, updatePropertyData } = useWizardStore();
 
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const rawValue = parseNumericValue(e.target.value);
-    // Sanity check: prevent extremely large numbers (> 1 Billion)
+    // Sanity check: prevent extremely large numbers (> 1 Trillion)
     if (rawValue.length > 12) return; 
     
     const numericValue = rawValue === '' ? 0 : parseInt(rawValue, 10);
@@ -19,6 +20,7 @@ export function PriceStep() {
   };
 
   const displayValue = propertyData.price ? formatNumberWithCommas(propertyData.price) : '';
+  const shorthandValue = propertyData.price ? formatCurrencyShorthand(propertyData.price) : '';
 
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -40,6 +42,22 @@ export function PriceStep() {
           inputMode="numeric"
           data-testid="price-input"
         />
+
+        <div className="h-8 flex items-center justify-center">
+          <AnimatePresence mode="wait">
+            {shorthandValue && (
+              <motion.p
+                key={shorthandValue}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="text-sm font-bold text-primary/60 uppercase tracking-widest"
+              >
+                {shorthandValue}
+              </motion.p>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
 
       <div className="text-center text-xs text-muted-foreground/50 uppercase tracking-widest">
