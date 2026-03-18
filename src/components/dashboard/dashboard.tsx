@@ -8,12 +8,23 @@
  */
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Plus, FolderOpen, Sparkles, ArrowRight } from 'lucide-react';
+import { Plus, FolderOpen, Sparkles, ArrowRight, Loader2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { ProjectCard } from './project-card';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 
 interface Project {
   id: string;
@@ -31,25 +42,19 @@ interface DashboardProps {
 
 export function Dashboard({ projects }: DashboardProps) {
   const router = useRouter();
+  const [projectToDelete, setProjectToDelete] = useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
-  const handleDelete = async (projectId: string) => {
-    if (!confirm('Are you sure you want to delete this project?')) {
-      return;
-    }
+  const handleDelete = (projectId: string) => setProjectToDelete(projectId);
 
+  const confirmDelete = async () => {
+    if (!projectToDelete) return;
+    setIsDeleting(true);
     try {
-      const response = await fetch(`/api/projects/${projectId}`, {
-        method: 'DELETE',
-      });
-
-      if (response.ok) {
-        router.refresh();
-      } else {
-        console.error('Failed to delete project');
-      }
-    } catch (error) {
-      console.error('Error deleting project:', error);
-    }
+      const res = await fetch(`/api/projects/${projectToDelete}`, { method: 'DELETE' });
+      if (res.ok) { setProjectToDelete(null); router.refresh(); }
+    } catch (error) { console.error('Delete error:', error);
+    } finally { setIsDeleting(false); }
   };
 
   // Split projects: first is featured, rest go in grid
@@ -78,6 +83,21 @@ export function Dashboard({ projects }: DashboardProps) {
 
       {/* Project Grid or Empty State */}
       {projects.length > 0 ? (
+        <>
+          <AlertDialog open={!!projectToDelete} onOpenChange={(v) => !v && setProjectToDelete(null)}>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Delete Project?</AlertDialogTitle>
+                <AlertDialogDescription>This action cannot be undone. This will permanently remove the project.</AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
+                <AlertDialogAction onClick={(e) => { e.preventDefault(); confirmDelete(); }} className="bg-destructive text-destructive-foreground hover:bg-destructive/90" disabled={isDeleting}>
+                  {isDeleting ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Deleting...</> : 'Delete Project'}
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         <div className="grid grid-cols-12 gap-6">
           {/* Featured Project - 8 columns */}
           {featuredProject && (
@@ -178,6 +198,7 @@ export function Dashboard({ projects }: DashboardProps) {
             </div>
           )}
         </div>
+      </>
       ) : (
         <EmptyState />
       )}
