@@ -21,3 +21,24 @@ export const parseNumericValue = (value: string) => {
   // Only allow digits, remove currency symbols and commas
   return value.replace(/[^0-9]/g, '');
 }
+
+/**
+ * Converts a number into a human-readable shorthand (e.g., 1.5 Million Naira).
+ * Used for real-time price magnitude confirmation in the Wizard.
+ */
+export const formatCurrencyShorthand = (amount: number, suffix: string = "Naira") => {
+  if (amount < 1000) return "";
+
+  if (amount >= 1_000_000_000) {
+    const value = amount / 1_000_000_000;
+    return `${value % 1 === 0 ? value.toFixed(0) : value.toFixed(1)} Billion ${suffix}`;
+  }
+
+  if (amount >= 1_000_000) {
+    const value = amount / 1_000_000;
+    return `${value % 1 === 0 ? value.toFixed(0) : value.toFixed(1)} Million ${suffix}`;
+  }
+
+  const value = amount / 1_000;
+  return `${value % 1 === 0 ? value.toFixed(0) : value.toFixed(1)} Thousand ${suffix}`;
+};
