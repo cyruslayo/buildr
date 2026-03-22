@@ -1,4 +1,4 @@
-import { formatNumberWithCommas, parseNumericValue } from '../../src/lib/formatters';
+import { formatNumberWithCommas, parseNumericValue, formatCurrencyShorthand } from '../../src/lib/formatters';
 
 describe('Formatters', () => {
   describe('formatNumberWithCommas', () => {
@@ -16,6 +16,31 @@ describe('Formatters', () => {
     it('removes non-numeric characters', () => {
       expect(parseNumericValue('150,000,000')).toBe('150000000');
       expect(parseNumericValue('₦150,000')).toBe('150000');
+    });
+  });
+
+  describe('formatCurrencyShorthand', () => {
+    it('formats thousands', () => {
+      expect(formatCurrencyShorthand(50000)).toBe('50 Thousand Naira');
+      expect(formatCurrencyShorthand(55500)).toBe('55.5 Thousand Naira');
+    });
+
+    it('formats millions', () => {
+      expect(formatCurrencyShorthand(150000000)).toBe('150 Million Naira');
+      expect(formatCurrencyShorthand(1500000)).toBe('1.5 Million Naira');
+    });
+
+    it('formats billions', () => {
+      expect(formatCurrencyShorthand(1000000000)).toBe('1 Billion Naira');
+      expect(formatCurrencyShorthand(2500000000)).toBe('2.5 Billion Naira');
+    });
+
+    it('handles zero', () => {
+      expect(formatCurrencyShorthand(0)).toBe('0 Naira');
+    });
+
+    it('supports custom suffixes', () => {
+      expect(formatCurrencyShorthand(1000, 'USD')).toBe('1 Thousand USD');
     });
   });
 });
