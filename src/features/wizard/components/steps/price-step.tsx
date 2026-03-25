@@ -4,7 +4,8 @@ import React from 'react';
 import { Label } from '@/components/ui/label';
 import { BigInput } from '../big-input';
 import { useWizardStore } from '../../store/wizard-store';
-import { formatNumberWithCommas, parseNumericValue } from '@/lib/formatters';
+import { formatNumberWithCommas, parseNumericValue, formatCurrencyShorthand } from '@/lib/formatters';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export function PriceStep() {
   const { propertyData, updatePropertyData } = useWizardStore();
@@ -19,6 +20,7 @@ export function PriceStep() {
   };
 
   const displayValue = propertyData.price ? formatNumberWithCommas(propertyData.price) : '';
+  const shorthandValue = propertyData.price ? formatCurrencyShorthand(propertyData.price) : '';
 
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -40,6 +42,24 @@ export function PriceStep() {
           inputMode="numeric"
           data-testid="price-input"
         />
+
+        {/* Real-time magnitude confirmation */}
+        <div className="h-8 flex items-center justify-center overflow-hidden" aria-live="polite">
+          <AnimatePresence mode="popLayout">
+            {propertyData.price && propertyData.price >= 1000 && (
+              <motion.span
+                key={shorthandValue}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.2 }}
+                className="text-primary font-medium tracking-wide"
+              >
+                {shorthandValue}
+              </motion.span>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
 
       <div className="text-center text-xs text-muted-foreground/50 uppercase tracking-widest">
