@@ -14,6 +14,11 @@ import { Button } from '@/components/ui/button'
 import { Menu, LogOut } from 'lucide-react'
 import { Sidebar } from './sidebar' // Reuse sidebar for mobile
 import { signOut, useSession } from 'next-auth/react'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 export function TopNav() {
   const { data: session } = useSession()
@@ -22,11 +27,18 @@ export function TopNav() {
     <div className="flex items-center p-4">
       {/* Mobile Menu */}
       <Sheet>
-        <SheetTrigger asChild>
-          <Button variant="ghost" size="icon" className="md:hidden">
-            <Menu />
-          </Button>
-        </SheetTrigger>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" className="md:hidden" aria-label="Open menu">
+                <Menu />
+              </Button>
+            </SheetTrigger>
+          </TooltipTrigger>
+          <TooltipContent side="bottom">
+            <p>Open menu</p>
+          </TooltipContent>
+        </Tooltip>
         <SheetContent side="left" className="p-0 bg-[#111827]">
           <Sidebar />
         </SheetContent>
