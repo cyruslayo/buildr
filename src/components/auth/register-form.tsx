@@ -91,9 +91,11 @@ export function RegisterForm({ onSuccess }: RegisterFormProps) {
           placeholder="John Doe"
           {...register('name')}
           disabled={isLoading}
+          aria-invalid={!!errors.name}
+          aria-describedby={errors.name ? "name-error" : undefined}
         />
         {errors.name && (
-          <p className="text-sm text-red-500">{errors.name.message}</p>
+          <p id="name-error" className="text-sm text-red-500">{errors.name.message}</p>
         )}
       </div>
 
@@ -106,9 +108,11 @@ export function RegisterForm({ onSuccess }: RegisterFormProps) {
           placeholder="you@example.com"
           {...register('email')}
           disabled={isLoading}
+          aria-invalid={!!errors.email}
+          aria-describedby={errors.email ? "email-error" : undefined}
         />
         {errors.email && (
-          <p className="text-sm text-red-500">{errors.email.message}</p>
+          <p id="email-error" className="text-sm text-red-500">{errors.email.message}</p>
         )}
       </div>
 
@@ -121,9 +125,11 @@ export function RegisterForm({ onSuccess }: RegisterFormProps) {
           placeholder="At least 8 characters"
           {...register('password')}
           disabled={isLoading}
+          aria-invalid={!!errors.password}
+          aria-describedby={errors.password ? "password-error" : undefined}
         />
         {errors.password && (
-          <p className="text-sm text-red-500">{errors.password.message}</p>
+          <p id="password-error" className="text-sm text-red-500">{errors.password.message}</p>
         )}
       </div>
 
@@ -136,6 +142,8 @@ export function RegisterForm({ onSuccess }: RegisterFormProps) {
             onCheckedChange={(checked) => setValue('ndprConsent', checked === true)}
             disabled={isLoading}
             className="mt-1"
+            aria-invalid={!!errors.ndprConsent}
+            aria-describedby={errors.ndprConsent ? "ndpr-error" : undefined}
           />
           <Label
             htmlFor="ndprConsent"
@@ -154,12 +162,16 @@ export function RegisterForm({ onSuccess }: RegisterFormProps) {
           </Label>
         </div>
         {errors.ndprConsent && (
-          <p className="text-sm text-red-500 mt-2">{errors.ndprConsent.message}</p>
+          <p id="ndpr-error" className="text-sm text-red-500 mt-2">{errors.ndprConsent.message}</p>
         )}
       </div>
 
       {error && (
-        <div data-testid="register-error" className="p-3 bg-red-50 border border-red-200 rounded-md">
+        <div
+          data-testid="register-error"
+          className="p-3 bg-red-50 border border-red-200 rounded-md"
+          role="alert"
+        >
           <p className="text-sm text-red-600">{error}</p>
         </div>
       )}

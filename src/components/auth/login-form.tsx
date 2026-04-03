@@ -86,9 +86,11 @@ export function LoginForm() {
           placeholder="you@example.com"
           {...register('email')}
           disabled={isLoading}
+          aria-invalid={!!errors.email}
+          aria-describedby={errors.email ? "email-error" : undefined}
         />
         {errors.email && (
-          <p className="text-sm text-red-500">{errors.email.message}</p>
+          <p id="email-error" className="text-sm text-red-500">{errors.email.message}</p>
         )}
       </div>
 
@@ -101,14 +103,20 @@ export function LoginForm() {
           placeholder="Your password"
           {...register('password')}
           disabled={isLoading}
+          aria-invalid={!!errors.password}
+          aria-describedby={errors.password ? "password-error" : undefined}
         />
         {errors.password && (
-          <p className="text-sm text-red-500">{errors.password.message}</p>
+          <p id="password-error" className="text-sm text-red-500">{errors.password.message}</p>
         )}
       </div>
 
       {error && (
-        <div data-testid="login-error" className="p-3 bg-red-50 border border-red-200 rounded-md">
+        <div
+          data-testid="login-error"
+          className="p-3 bg-red-50 border border-red-200 rounded-md"
+          role="alert"
+        >
           <p className="text-sm text-red-600">{error}</p>
         </div>
       )}
