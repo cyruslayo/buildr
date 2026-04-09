@@ -21,3 +21,28 @@ export const parseNumericValue = (value: string) => {
   // Only allow digits, remove currency symbols and commas
   return value.replace(/[^0-9]/g, '');
 }
+
+/**
+ * Converts a number to a human-readable shorthand (e.g., 1.5 Million Naira)
+ * Optimized for Nigerian real estate context.
+ */
+export const formatCurrencyShorthand = (amount: number, suffix = "Naira") => {
+  if (!amount || amount < 0) return "";
+
+  if (amount >= 1_000_000_000) {
+    const val = amount / 1_000_000_000;
+    return `${val % 1 === 0 ? val.toFixed(0) : val.toFixed(1)} Billion ${suffix}`;
+  }
+
+  if (amount >= 1_000_000) {
+    const val = amount / 1_000_000;
+    return `${val % 1 === 0 ? val.toFixed(0) : val.toFixed(1)} Million ${suffix}`;
+  }
+
+  if (amount >= 1_000) {
+    const val = amount / 1_000;
+    return `${val % 1 === 0 ? val.toFixed(0) : val.toFixed(1)} Thousand ${suffix}`;
+  }
+
+  return `${amount} ${suffix}`;
+}
