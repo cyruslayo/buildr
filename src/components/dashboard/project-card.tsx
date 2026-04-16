@@ -77,7 +77,7 @@ export function ProjectCard({ project, onDelete, compact = false }: ProjectCardP
             {formatDate(project.updatedAt)}
           </span>
           <Link
-            href={`/builder/${project.id}`}
+            href={`/wizard/${project.id}`}
             className="text-xs text-emerald-600 font-medium hover:text-emerald-700"
           >
             Edit →
@@ -115,7 +115,7 @@ export function ProjectCard({ project, onDelete, compact = false }: ProjectCardP
       
       <CardFooter className="flex gap-2 pt-2">
         <Button asChild variant="outline" size="sm" className="flex-1">
-          <Link href={`/builder/${project.id}`}>
+          <Link href={`/wizard/${project.id}`}>
             <Edit className="mr-1.5 h-3.5 w-3.5" />
             Edit
           </Link>
