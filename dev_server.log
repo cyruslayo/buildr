@@ -1,0 +1,126 @@
+
+> buildr@0.1.0 dev /app
+> next dev
+
+   ▲ Next.js 15.5.9
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.0.2:3000
+   - Experiments (use with caution):
+     · clientTraceMetadata
+
+ ✓ Starting...
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+[@sentry/nextjs] It appears you've configured a `sentry.server.config.ts` file. Please ensure to put this file's content into the `register()` function of a Next.js instrumentation file instead. To ensure correct functionality of the SDK, `Sentry.init` must be called inside of an instrumentation file. Learn more about setting up an instrumentation file in Next.js: https://nextjs.org/docs/app/building-your-application/optimizing/instrumentation. You can safely delete the `sentry.server.config.ts` file afterward.
+[@sentry/nextjs] Could not find a Next.js instrumentation file. This indicates an incomplete configuration of the Sentry SDK. An instrumentation file is required for the Sentry SDK to be initialized on the server: https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/#create-initialization-config-files (you can suppress this warning by setting SENTRY_SUPPRESS_INSTRUMENTATION_FILE_WARNING=1 as environment variable)
+[@sentry/nextjs] It seems like you don't have a global error handler set up. It is recommended that you add a 'global-error.js' file with Sentry instrumentation so that React rendering errors are reported to Sentry. Read more: https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/#react-render-errors-in-app-router (you can suppress this warning by setting SENTRY_SUPPRESS_GLOBAL_ERROR_HANDLER_FILE_WARNING=1 as environment variable)
+[@sentry/nextjs] It appears you've configured a `sentry.edge.config.ts` file. Please ensure to put this file's content into the `register()` function of a Next.js instrumentation file instead. To ensure correct functionality of the SDK, `Sentry.init` must be called inside of an instrumentation file. Learn more about setting up an instrumentation file in Next.js: https://nextjs.org/docs/app/building-your-application/optimizing/instrumentation. You can safely delete the `sentry.edge.config.ts` file afterward.
+[@sentry/nextjs] DEPRECATION WARNING: It is recommended renaming your `sentry.client.config.ts` file, or moving its content to `instrumentation-client.ts`. When using Turbopack `sentry.client.config.ts` will no longer work. Read more about the `instrumentation-client.ts` file: https://nextjs.org/docs/app/api-reference/file-conventions/instrumentation-client
+ ○ (pwa) PWA support is disabled.
+ ✓ Ready in 3.4s
+ ○ Compiling / ...
+ ✓ Compiled / in 17.4s (2634 modules)
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ HEAD / 200 in 20052ms
+ ✓ Compiled in 3.3s (1034 modules)
+ ○ Compiling /wizard ...
+ ✓ Compiled /wizard in 8.3s (3338 modules)
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /wizard. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ GET /wizard?step=price 200 in 9839ms
+ ⨯ Error: Cannot find module '.prisma/client/default'
+Require stack:
+- /app/node_modules/.pnpm/@prisma+client@7.1.0_prisma@7.1.0_@types+react@18.3.27_react-dom@18.3.1_react@18.3.1__r_f49069871c4461bef4c471fd83022a5a/node_modules/@prisma/client/default.js
+- /app/.next/server/app/wizard/page.js
+- /app/node_modules/.pnpm/next@15.5.9_@babel+core@7.28.5_@opentelemetry+api@1.9.0_@playwright+test@1.57.0_react-d_f105d8dc12b006b7edc4efac44f0e09f/node_modules/next/dist/server/require.js
+- /app/node_modules/.pnpm/next@15.5.9_@babel+core@7.28.5_@opentelemetry+api@1.9.0_@playwright+test@1.57.0_react-d_f105d8dc12b006b7edc4efac44f0e09f/node_modules/next/dist/server/load-components.js
+- /app/node_modules/.pnpm/next@15.5.9_@babel+core@7.28.5_@opentelemetry+api@1.9.0_@playwright+test@1.57.0_react-d_f105d8dc12b006b7edc4efac44f0e09f/node_modules/next/dist/build/utils.js
+- /app/node_modules/.pnpm/next@15.5.9_@babel+core@7.28.5_@opentelemetry+api@1.9.0_@playwright+test@1.57.0_react-d_f105d8dc12b006b7edc4efac44f0e09f/node_modules/next/dist/build/swc/options.js
+- /app/node_modules/.pnpm/next@15.5.9_@babel+core@7.28.5_@opentelemetry+api@1.9.0_@playwright+test@1.57.0_react-d_f105d8dc12b006b7edc4efac44f0e09f/node_modules/next/dist/build/swc/index.js
+- /app/node_modules/.pnpm/next@15.5.9_@babel+core@7.28.5_@opentelemetry+api@1.9.0_@playwright+test@1.57.0_react-d_f105d8dc12b006b7edc4efac44f0e09f/node_modules/next/dist/build/next-config-ts/transpile-config.js
+- /app/node_modules/.pnpm/next@15.5.9_@babel+core@7.28.5_@opentelemetry+api@1.9.0_@playwright+test@1.57.0_react-d_f105d8dc12b006b7edc4efac44f0e09f/node_modules/next/dist/server/config.js
+- /app/node_modules/.pnpm/next@15.5.9_@babel+core@7.28.5_@opentelemetry+api@1.9.0_@playwright+test@1.57.0_react-d_f105d8dc12b006b7edc4efac44f0e09f/node_modules/next/dist/server/next.js
+- /app/node_modules/.pnpm/next@15.5.9_@babel+core@7.28.5_@opentelemetry+api@1.9.0_@playwright+test@1.57.0_react-d_f105d8dc12b006b7edc4efac44f0e09f/node_modules/next/dist/server/lib/start-server.js
+    at @prisma/client (.next/server/app/wizard/page.js:754:18)
+    at eval (webpack-internal:///(action-browser)/./src/features/wizard/actions/update-property-draft.ts:11:72)
+    at eval (webpack-internal:///(action-browser)/./src/features/wizard/actions/update-property-draft.ts:1:21)
+    at (action-browser)/./src/features/wizard/actions/update-property-draft.ts (.next/server/app/wizard/page.js:55:1)
+    at (action-browser)/./node_modules/.pnpm/next@15.5.9_@babel+core@7.28.5_@opentelemetry+api@1.9.0_@playwright+test@1.57.0_react-d_f105d8dc12b006b7edc4efac44f0e09f/node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fapp%2Fsrc%2Ffeatures%2Fwizard%2Factions%2Fupdate-property-draft.ts%22%2C%5B%7B%22id%22%3A%2240bcb3a6990e91a5336f87b04fd754ef382874b275%22%2C%22exportedName%22%3A%22updatePropertyDraft%22%2C%22filename%22%3A%22features%2Fwizard%2Factions%2Fupdate-property-draft.ts%22%7D%5D%5D%2C%5B%22%2Fapp%2Fsrc%2Ffeatures%2Fwizard%2Factions%2Fget-cloudinary-signature.ts%22%2C%5B%7B%22id%22%3A%22007b8f23b7a4d35870ec95a04461d864f5d9fcddcb%22%2C%22exportedName%22%3A%22getCloudinarySignature%22%2C%22filename%22%3A%22features%2Fwizard%2Factions%2Fget-cloudinary-signature.ts%22%7D%5D%5D%2C%5B%22%2Fapp%2Fsrc%2Ffeatures%2Fwizard%2Factions%2Fpublish-listing.ts%22%2C%5B%7B%22id%22%3A%2260d94985497374f25f473c51726dc29a2444ef6de3%22%2C%22exportedName%22%3A%22publishListing%22%2C%22filename%22%3A%22features%2Fwizard%2Factions%2Fpublish-listing.ts%22%7D%5D%5D%5D&__client_imported__=true! (.next/server/app/wizard/page.js:22:1) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  digest: '2223592688'
+}
+ POST /wizard?step=price 500 in 1171ms
+ ⨯ Error: Cannot find module '.prisma/client/default'
+Require stack:
+- /app/node_modules/.pnpm/@prisma+client@7.1.0_prisma@7.1.0_@types+react@18.3.27_react-dom@18.3.1_react@18.3.1__r_f49069871c4461bef4c471fd83022a5a/node_modules/@prisma/client/default.js
+- /app/.next/server/app/wizard/page.js
+- /app/node_modules/.pnpm/next@15.5.9_@babel+core@7.28.5_@opentelemetry+api@1.9.0_@playwright+test@1.57.0_react-d_f105d8dc12b006b7edc4efac44f0e09f/node_modules/next/dist/server/require.js
+- /app/node_modules/.pnpm/next@15.5.9_@babel+core@7.28.5_@opentelemetry+api@1.9.0_@playwright+test@1.57.0_react-d_f105d8dc12b006b7edc4efac44f0e09f/node_modules/next/dist/server/load-components.js
+- /app/node_modules/.pnpm/next@15.5.9_@babel+core@7.28.5_@opentelemetry+api@1.9.0_@playwright+test@1.57.0_react-d_f105d8dc12b006b7edc4efac44f0e09f/node_modules/next/dist/build/utils.js
+- /app/node_modules/.pnpm/next@15.5.9_@babel+core@7.28.5_@opentelemetry+api@1.9.0_@playwright+test@1.57.0_react-d_f105d8dc12b006b7edc4efac44f0e09f/node_modules/next/dist/build/swc/options.js
+- /app/node_modules/.pnpm/next@15.5.9_@babel+core@7.28.5_@opentelemetry+api@1.9.0_@playwright+test@1.57.0_react-d_f105d8dc12b006b7edc4efac44f0e09f/node_modules/next/dist/build/swc/index.js
+- /app/node_modules/.pnpm/next@15.5.9_@babel+core@7.28.5_@opentelemetry+api@1.9.0_@playwright+test@1.57.0_react-d_f105d8dc12b006b7edc4efac44f0e09f/node_modules/next/dist/build/next-config-ts/transpile-config.js
+- /app/node_modules/.pnpm/next@15.5.9_@babel+core@7.28.5_@opentelemetry+api@1.9.0_@playwright+test@1.57.0_react-d_f105d8dc12b006b7edc4efac44f0e09f/node_modules/next/dist/server/config.js
+- /app/node_modules/.pnpm/next@15.5.9_@babel+core@7.28.5_@opentelemetry+api@1.9.0_@playwright+test@1.57.0_react-d_f105d8dc12b006b7edc4efac44f0e09f/node_modules/next/dist/server/next.js
+- /app/node_modules/.pnpm/next@15.5.9_@babel+core@7.28.5_@opentelemetry+api@1.9.0_@playwright+test@1.57.0_react-d_f105d8dc12b006b7edc4efac44f0e09f/node_modules/next/dist/server/lib/start-server.js
+    at @prisma/client (.next/server/app/wizard/page.js:754:18)
+    at eval (webpack-internal:///(action-browser)/./src/features/wizard/actions/update-property-draft.ts:11:72)
+    at eval (webpack-internal:///(action-browser)/./src/features/wizard/actions/update-property-draft.ts:1:21)
+    at (action-browser)/./src/features/wizard/actions/update-property-draft.ts (.next/server/app/wizard/page.js:55:1)
+    at (action-browser)/./node_modules/.pnpm/next@15.5.9_@babel+core@7.28.5_@opentelemetry+api@1.9.0_@playwright+test@1.57.0_react-d_f105d8dc12b006b7edc4efac44f0e09f/node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fapp%2Fsrc%2Ffeatures%2Fwizard%2Factions%2Fupdate-property-draft.ts%22%2C%5B%7B%22id%22%3A%2240bcb3a6990e91a5336f87b04fd754ef382874b275%22%2C%22exportedName%22%3A%22updatePropertyDraft%22%2C%22filename%22%3A%22features%2Fwizard%2Factions%2Fupdate-property-draft.ts%22%7D%5D%5D%2C%5B%22%2Fapp%2Fsrc%2Ffeatures%2Fwizard%2Factions%2Fget-cloudinary-signature.ts%22%2C%5B%7B%22id%22%3A%22007b8f23b7a4d35870ec95a04461d864f5d9fcddcb%22%2C%22exportedName%22%3A%22getCloudinarySignature%22%2C%22filename%22%3A%22features%2Fwizard%2Factions%2Fget-cloudinary-signature.ts%22%7D%5D%5D%2C%5B%22%2Fapp%2Fsrc%2Ffeatures%2Fwizard%2Factions%2Fpublish-listing.ts%22%2C%5B%7B%22id%22%3A%2260d94985497374f25f473c51726dc29a2444ef6de3%22%2C%22exportedName%22%3A%22publishListing%22%2C%22filename%22%3A%22features%2Fwizard%2Factions%2Fpublish-listing.ts%22%7D%5D%5D%5D&__client_imported__=true! (.next/server/app/wizard/page.js:22:1) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  digest: '2223592688'
+}
+ POST /wizard?step=price 500 in 476ms
+ ⨯ Error: Cannot find module '.prisma/client/default'
+Require stack:
+- /app/node_modules/.pnpm/@prisma+client@7.1.0_prisma@7.1.0_@types+react@18.3.27_react-dom@18.3.1_react@18.3.1__r_f49069871c4461bef4c471fd83022a5a/node_modules/@prisma/client/default.js
+- /app/.next/server/app/wizard/page.js
+- /app/node_modules/.pnpm/next@15.5.9_@babel+core@7.28.5_@opentelemetry+api@1.9.0_@playwright+test@1.57.0_react-d_f105d8dc12b006b7edc4efac44f0e09f/node_modules/next/dist/server/require.js
+- /app/node_modules/.pnpm/next@15.5.9_@babel+core@7.28.5_@opentelemetry+api@1.9.0_@playwright+test@1.57.0_react-d_f105d8dc12b006b7edc4efac44f0e09f/node_modules/next/dist/server/load-components.js
+- /app/node_modules/.pnpm/next@15.5.9_@babel+core@7.28.5_@opentelemetry+api@1.9.0_@playwright+test@1.57.0_react-d_f105d8dc12b006b7edc4efac44f0e09f/node_modules/next/dist/build/utils.js
+- /app/node_modules/.pnpm/next@15.5.9_@babel+core@7.28.5_@opentelemetry+api@1.9.0_@playwright+test@1.57.0_react-d_f105d8dc12b006b7edc4efac44f0e09f/node_modules/next/dist/build/swc/options.js
+- /app/node_modules/.pnpm/next@15.5.9_@babel+core@7.28.5_@opentelemetry+api@1.9.0_@playwright+test@1.57.0_react-d_f105d8dc12b006b7edc4efac44f0e09f/node_modules/next/dist/build/swc/index.js
+- /app/node_modules/.pnpm/next@15.5.9_@babel+core@7.28.5_@opentelemetry+api@1.9.0_@playwright+test@1.57.0_react-d_f105d8dc12b006b7edc4efac44f0e09f/node_modules/next/dist/build/next-config-ts/transpile-config.js
+- /app/node_modules/.pnpm/next@15.5.9_@babel+core@7.28.5_@opentelemetry+api@1.9.0_@playwright+test@1.57.0_react-d_f105d8dc12b006b7edc4efac44f0e09f/node_modules/next/dist/server/config.js
+- /app/node_modules/.pnpm/next@15.5.9_@babel+core@7.28.5_@opentelemetry+api@1.9.0_@playwright+test@1.57.0_react-d_f105d8dc12b006b7edc4efac44f0e09f/node_modules/next/dist/server/next.js
+- /app/node_modules/.pnpm/next@15.5.9_@babel+core@7.28.5_@opentelemetry+api@1.9.0_@playwright+test@1.57.0_react-d_f105d8dc12b006b7edc4efac44f0e09f/node_modules/next/dist/server/lib/start-server.js
+    at @prisma/client (.next/server/app/wizard/page.js:754:18)
+    at eval (webpack-internal:///(action-browser)/./src/features/wizard/actions/update-property-draft.ts:11:72)
+    at eval (webpack-internal:///(action-browser)/./src/features/wizard/actions/update-property-draft.ts:1:21)
+    at (action-browser)/./src/features/wizard/actions/update-property-draft.ts (.next/server/app/wizard/page.js:55:1)
+    at (action-browser)/./node_modules/.pnpm/next@15.5.9_@babel+core@7.28.5_@opentelemetry+api@1.9.0_@playwright+test@1.57.0_react-d_f105d8dc12b006b7edc4efac44f0e09f/node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fapp%2Fsrc%2Ffeatures%2Fwizard%2Factions%2Fupdate-property-draft.ts%22%2C%5B%7B%22id%22%3A%2240bcb3a6990e91a5336f87b04fd754ef382874b275%22%2C%22exportedName%22%3A%22updatePropertyDraft%22%2C%22filename%22%3A%22features%2Fwizard%2Factions%2Fupdate-property-draft.ts%22%7D%5D%5D%2C%5B%22%2Fapp%2Fsrc%2Ffeatures%2Fwizard%2Factions%2Fget-cloudinary-signature.ts%22%2C%5B%7B%22id%22%3A%22007b8f23b7a4d35870ec95a04461d864f5d9fcddcb%22%2C%22exportedName%22%3A%22getCloudinarySignature%22%2C%22filename%22%3A%22features%2Fwizard%2Factions%2Fget-cloudinary-signature.ts%22%7D%5D%5D%2C%5B%22%2Fapp%2Fsrc%2Ffeatures%2Fwizard%2Factions%2Fpublish-listing.ts%22%2C%5B%7B%22id%22%3A%2260d94985497374f25f473c51726dc29a2444ef6de3%22%2C%22exportedName%22%3A%22publishListing%22%2C%22filename%22%3A%22features%2Fwizard%2Factions%2Fpublish-listing.ts%22%7D%5D%5D%5D&__client_imported__=true! (.next/server/app/wizard/page.js:22:1) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  digest: '2223592688'
+}
+ POST /wizard?step=price 500 in 466ms
+ ⨯ Error: Cannot find module '.prisma/client/default'
+Require stack:
+- /app/node_modules/.pnpm/@prisma+client@7.1.0_prisma@7.1.0_@types+react@18.3.27_react-dom@18.3.1_react@18.3.1__r_f49069871c4461bef4c471fd83022a5a/node_modules/@prisma/client/default.js
+- /app/.next/server/app/wizard/page.js
+- /app/node_modules/.pnpm/next@15.5.9_@babel+core@7.28.5_@opentelemetry+api@1.9.0_@playwright+test@1.57.0_react-d_f105d8dc12b006b7edc4efac44f0e09f/node_modules/next/dist/server/require.js
+- /app/node_modules/.pnpm/next@15.5.9_@babel+core@7.28.5_@opentelemetry+api@1.9.0_@playwright+test@1.57.0_react-d_f105d8dc12b006b7edc4efac44f0e09f/node_modules/next/dist/server/load-components.js
+- /app/node_modules/.pnpm/next@15.5.9_@babel+core@7.28.5_@opentelemetry+api@1.9.0_@playwright+test@1.57.0_react-d_f105d8dc12b006b7edc4efac44f0e09f/node_modules/next/dist/build/utils.js
+- /app/node_modules/.pnpm/next@15.5.9_@babel+core@7.28.5_@opentelemetry+api@1.9.0_@playwright+test@1.57.0_react-d_f105d8dc12b006b7edc4efac44f0e09f/node_modules/next/dist/build/swc/options.js
+- /app/node_modules/.pnpm/next@15.5.9_@babel+core@7.28.5_@opentelemetry+api@1.9.0_@playwright+test@1.57.0_react-d_f105d8dc12b006b7edc4efac44f0e09f/node_modules/next/dist/build/swc/index.js
+- /app/node_modules/.pnpm/next@15.5.9_@babel+core@7.28.5_@opentelemetry+api@1.9.0_@playwright+test@1.57.0_react-d_f105d8dc12b006b7edc4efac44f0e09f/node_modules/next/dist/build/next-config-ts/transpile-config.js
+- /app/node_modules/.pnpm/next@15.5.9_@babel+core@7.28.5_@opentelemetry+api@1.9.0_@playwright+test@1.57.0_react-d_f105d8dc12b006b7edc4efac44f0e09f/node_modules/next/dist/server/config.js
+- /app/node_modules/.pnpm/next@15.5.9_@babel+core@7.28.5_@opentelemetry+api@1.9.0_@playwright+test@1.57.0_react-d_f105d8dc12b006b7edc4efac44f0e09f/node_modules/next/dist/server/next.js
+- /app/node_modules/.pnpm/next@15.5.9_@babel+core@7.28.5_@opentelemetry+api@1.9.0_@playwright+test@1.57.0_react-d_f105d8dc12b006b7edc4efac44f0e09f/node_modules/next/dist/server/lib/start-server.js
+    at @prisma/client (.next/server/app/wizard/page.js:754:18)
+    at eval (webpack-internal:///(action-browser)/./src/features/wizard/actions/update-property-draft.ts:11:72)
+    at eval (webpack-internal:///(action-browser)/./src/features/wizard/actions/update-property-draft.ts:1:21)
+    at (action-browser)/./src/features/wizard/actions/update-property-draft.ts (.next/server/app/wizard/page.js:55:1)
+    at (action-browser)/./node_modules/.pnpm/next@15.5.9_@babel+core@7.28.5_@opentelemetry+api@1.9.0_@playwright+test@1.57.0_react-d_f105d8dc12b006b7edc4efac44f0e09f/node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fapp%2Fsrc%2Ffeatures%2Fwizard%2Factions%2Fupdate-property-draft.ts%22%2C%5B%7B%22id%22%3A%2240bcb3a6990e91a5336f87b04fd754ef382874b275%22%2C%22exportedName%22%3A%22updatePropertyDraft%22%2C%22filename%22%3A%22features%2Fwizard%2Factions%2Fupdate-property-draft.ts%22%7D%5D%5D%2C%5B%22%2Fapp%2Fsrc%2Ffeatures%2Fwizard%2Factions%2Fget-cloudinary-signature.ts%22%2C%5B%7B%22id%22%3A%22007b8f23b7a4d35870ec95a04461d864f5d9fcddcb%22%2C%22exportedName%22%3A%22getCloudinarySignature%22%2C%22filename%22%3A%22features%2Fwizard%2Factions%2Fget-cloudinary-signature.ts%22%7D%5D%5D%2C%5B%22%2Fapp%2Fsrc%2Ffeatures%2Fwizard%2Factions%2Fpublish-listing.ts%22%2C%5B%7B%22id%22%3A%2260d94985497374f25f473c51726dc29a2444ef6de3%22%2C%22exportedName%22%3A%22publishListing%22%2C%22filename%22%3A%22features%2Fwizard%2Factions%2Fpublish-listing.ts%22%7D%5D%5D%5D&__client_imported__=true! (.next/server/app/wizard/page.js:22:1) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  digest: '2223592688'
+}
+ POST /wizard?step=price 500 in 483ms

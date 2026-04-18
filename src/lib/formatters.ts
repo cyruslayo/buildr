@@ -21,3 +21,28 @@ export const parseNumericValue = (value: string) => {
   // Only allow digits, remove currency symbols and commas
   return value.replace(/[^0-9]/g, '');
 }
+
+/**
+ * Formats a number into a human-readable shorthand (e.g., 1.5 Million Naira).
+ * Truncates to one decimal place to avoid rounding up.
+ */
+export const formatCurrencyShorthand = (amount: number, suffix: string = 'Naira') => {
+  if (amount === 0) return `0 ${suffix}`;
+
+  if (amount >= 1_000_000_000) {
+    const value = Math.floor((amount / 1_000_000_000) * 10) / 10;
+    return `${value} Billion ${suffix}`;
+  }
+
+  if (amount >= 1_000_000) {
+    const value = Math.floor((amount / 1_000_000) * 10) / 10;
+    return `${value} Million ${suffix}`;
+  }
+
+  if (amount >= 1_000) {
+    const value = Math.floor((amount / 1_000) * 10) / 10;
+    return `${value} Thousand ${suffix}`;
+  }
+
+  return `${amount} ${suffix}`;
+};
