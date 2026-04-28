@@ -21,3 +21,24 @@ export const parseNumericValue = (value: string) => {
   // Only allow digits, remove currency symbols and commas
   return value.replace(/[^0-9]/g, '');
 }
+
+export const formatCurrencyShorthand = (value: number, suffix: string = 'Naira') => {
+  if (!value || isNaN(value)) return '';
+
+  if (value >= 1_000_000_000) {
+    const formatted = Math.floor((value / 1_000_000_000) * 10) / 10;
+    return `${formatted} Billion ${suffix}`;
+  }
+
+  if (value >= 1_000_000) {
+    const formatted = Math.floor((value / 1_000_000) * 10) / 10;
+    return `${formatted} Million ${suffix}`;
+  }
+
+  if (value >= 1_000) {
+    const formatted = Math.floor((value / 1_000) * 10) / 10;
+    return `${formatted} Thousand ${suffix}`;
+  }
+
+  return `${value} ${suffix}`;
+};
