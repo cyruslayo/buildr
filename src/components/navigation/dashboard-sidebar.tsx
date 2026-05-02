@@ -73,7 +73,7 @@ export function DashboardSidebar({
       {/* Create New Button */}
       <div className="p-4">
         <Link
-          href="/builder"
+          href="/wizard?step=title"
           className={cn(
             'flex items-center justify-center gap-2 py-3 bg-emerald-600 text-white font-bold uppercase tracking-widest text-sm hover:bg-emerald-500 transition-all rounded-lg shadow-lg shadow-emerald-900/50',
             isCollapsed ? 'px-2' : 'px-4'
