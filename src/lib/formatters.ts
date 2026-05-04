@@ -21,3 +21,21 @@ export const parseNumericValue = (value: string) => {
   // Only allow digits, remove currency symbols and commas
   return value.replace(/[^0-9]/g, '');
 }
+
+export const formatCurrencyShorthand = (amount: number) => {
+  if (amount < 1000) return amount.toString();
+
+  if (amount >= 1000000000) {
+    const value = Math.floor((amount / 1000000000) * 10) / 10;
+    return `${value} Billion`;
+  }
+  if (amount >= 1000000) {
+    const value = Math.floor((amount / 1000000) * 10) / 10;
+    return `${value} Million`;
+  }
+  if (amount >= 1000) {
+    const value = Math.floor((amount / 1000) * 10) / 10;
+    return `${value} Thousand`;
+  }
+  return amount.toString();
+};
