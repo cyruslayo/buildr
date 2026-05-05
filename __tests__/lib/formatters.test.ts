@@ -1,4 +1,4 @@
-import { formatNumberWithCommas, parseNumericValue } from '../../src/lib/formatters';
+import { formatNumberWithCommas, parseNumericValue, formatCurrencyShorthand } from '../../src/lib/formatters';
 
 describe('Formatters', () => {
   describe('formatNumberWithCommas', () => {
@@ -16,6 +16,30 @@ describe('Formatters', () => {
     it('removes non-numeric characters', () => {
       expect(parseNumericValue('150,000,000')).toBe('150000000');
       expect(parseNumericValue('₦150,000')).toBe('150000');
+    });
+  });
+
+  describe('formatCurrencyShorthand', () => {
+    it('handles values less than 1000', () => {
+      expect(formatCurrencyShorthand(500)).toBe('500');
+      expect(formatCurrencyShorthand(0)).toBe('0');
+    });
+
+    it('formats thousands correctly', () => {
+      expect(formatCurrencyShorthand(1000)).toBe('1 Thousand');
+      expect(formatCurrencyShorthand(1500)).toBe('1.5 Thousand');
+      expect(formatCurrencyShorthand(999999)).toBe('999.9 Thousand');
+    });
+
+    it('formats millions correctly', () => {
+      expect(formatCurrencyShorthand(1000000)).toBe('1 Million');
+      expect(formatCurrencyShorthand(1500000)).toBe('1.5 Million');
+      expect(formatCurrencyShorthand(150000000)).toBe('150 Million');
+    });
+
+    it('formats billions correctly', () => {
+      expect(formatCurrencyShorthand(1000000000)).toBe('1 Billion');
+      expect(formatCurrencyShorthand(1500000000)).toBe('1.5 Billion');
     });
   });
 });
