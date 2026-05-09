@@ -1,10 +1,10 @@
 'use client';
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Label } from '@/components/ui/label';
 import { BigInput } from '../big-input';
 import { useWizardStore } from '../../store/wizard-store';
-import { formatNumberWithCommas, parseNumericValue } from '@/lib/formatters';
+import { formatNumberWithCommas, parseNumericValue, formatCurrencyShorthand } from '@/lib/formatters';
 
 export function PriceStep() {
   const { propertyData, updatePropertyData } = useWizardStore();
@@ -20,6 +20,10 @@ export function PriceStep() {
 
   const displayValue = propertyData.price ? formatNumberWithCommas(propertyData.price) : '';
 
+  const shorthandValue = useMemo(() => {
+    return propertyData.price ? formatCurrencyShorthand(Number(propertyData.price)) : null;
+  }, [propertyData.price]);
+
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
       <div className="text-center space-y-2">
@@ -27,7 +31,7 @@ export function PriceStep() {
         <p className="text-muted-foreground">Always specify in Naira (₦) for Nigerian buyers.</p>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-4 relative">
         <Label htmlFor="price-input" className="block text-center text-xs font-medium uppercase tracking-widest text-muted-foreground/60">
           Asking Price
         </Label>
@@ -40,6 +44,19 @@ export function PriceStep() {
           inputMode="numeric"
           data-testid="price-input"
         />
+
+        {/* Real-time magnitude confirmation */}
+        <div className="flex justify-center h-6 pointer-events-none mt-2">
+          {shorthandValue && Number(propertyData.price) >= 1000 ? (
+            <p
+              key={shorthandValue}
+              className="text-emerald-600 font-bold text-sm animate-in fade-in zoom-in-95 duration-200"
+              aria-live="polite"
+            >
+              {shorthandValue} Naira
+            </p>
+          ) : null}
+        </div>
       </div>
 
       <div className="text-center text-xs text-muted-foreground/50 uppercase tracking-widest">
