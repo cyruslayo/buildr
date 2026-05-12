@@ -3,6 +3,7 @@ import { Fraunces, Space_Grotesk } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/react';
 import './globals.css';
 import { OfflineIndicator } from '@/components/navigation/offline-indicator';
+import { TooltipProvider } from '@/components/ui/tooltip';
 
 const fraunces = Fraunces({
   subsets: ['latin'],
@@ -32,9 +33,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${fraunces.variable} ${spaceGrotesk.variable}`}>
       <body className="font-body antialiased">
-        <OfflineIndicator />
-        {children}
-        <Analytics />
+        <TooltipProvider>
+          <OfflineIndicator />
+          {children}
+          <Analytics />
+        </TooltipProvider>
       </body>
     </html>
   );
