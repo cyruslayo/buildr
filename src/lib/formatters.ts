@@ -7,6 +7,17 @@ const NGN_FORMATTER = new Intl.NumberFormat("en-NG", {
 
 const COMMA_FORMATTER = new Intl.NumberFormat('en-NG');
 
+const MAGNITUDE_FORMATTER = new Intl.NumberFormat('en-NG', {
+  notation: 'compact',
+  compactDisplay: 'long',
+  maximumFractionDigits: 1,
+});
+
+export const formatMagnitude = (value: number) => {
+  if (value < 1000) return '';
+  return MAGNITUDE_FORMATTER.format(value);
+}
+
 export const formatCurrency = (amount: number) => {
   return NGN_FORMATTER.format(amount);
 }
