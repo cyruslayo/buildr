@@ -7,6 +7,11 @@ const NGN_FORMATTER = new Intl.NumberFormat("en-NG", {
 
 const COMMA_FORMATTER = new Intl.NumberFormat('en-NG');
 
+const MAGNITUDE_FORMATTER = new Intl.NumberFormat('en-NG', {
+  notation: 'compact',
+  compactDisplay: 'long',
+});
+
 export const formatCurrency = (amount: number) => {
   return NGN_FORMATTER.format(amount);
 }
@@ -20,4 +25,9 @@ export const formatNumberWithCommas = (value: string | number) => {
 export const parseNumericValue = (value: string) => {
   // Only allow digits, remove currency symbols and commas
   return value.replace(/[^0-9]/g, '');
+}
+
+export const formatMagnitude = (value: number) => {
+  if (!value || value < 1000) return '';
+  return `${MAGNITUDE_FORMATTER.format(value)} Naira`;
 }
