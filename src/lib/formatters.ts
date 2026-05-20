@@ -21,3 +21,14 @@ export const parseNumericValue = (value: string) => {
   // Only allow digits, remove currency symbols and commas
   return value.replace(/[^0-9]/g, '');
 }
+
+export const formatMagnitude = (value: number) => {
+  if (!value || value < 1000) return '';
+
+  const formatter = new Intl.NumberFormat('en-NG', {
+    notation: 'compact',
+    compactDisplay: 'long',
+  });
+
+  return `${formatter.format(value)} Naira`;
+};
