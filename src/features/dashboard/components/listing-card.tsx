@@ -6,7 +6,6 @@
  */
 
 import React, { useTransition } from 'react';
-import Image from 'next/image';
 import { Property, PropertyStatus } from '@prisma/client';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -209,7 +208,7 @@ export function ListingCard({ property, isFeatured = false }: ListingCardProps) 
                     title="Unpublish this listing"
                   >
                     <EyeOff className="h-5 w-5 md:h-3.5 md:w-3.5" />
-                    <span className="md:inline">Unpublish</span>
+                    <span className="hidden md:inline">Unpublish</span>
                   </Button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px]">
@@ -259,7 +258,7 @@ export function ListingCard({ property, isFeatured = false }: ListingCardProps) 
                     aria-label={`Delete draft: ${property.title || 'Untitled Property'}`}
                   >
                     <Trash2 className="h-5 w-5 md:h-3.5 md:w-3.5" />
-                    <span className="md:inline">Delete</span>
+                    <span className="hidden md:inline">Delete</span>
                   </Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
@@ -314,7 +313,7 @@ export function ListingCard({ property, isFeatured = false }: ListingCardProps) 
               ) : (
                 <Copy className="h-5 w-5 md:h-3.5 md:w-3.5" />
               )}
-              <span className="md:inline">{isPending ? 'Duplicating...' : 'Duplicate'}</span>
+              <span className="hidden md:inline">{isPending ? 'Duplicating...' : 'Duplicate'}</span>
             </Button>
           </div>
         </CardFooter>
