@@ -5,6 +5,8 @@ import { useWizardStore } from '../../store/wizard-store';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 
+const MAX_DESCRIPTION_LENGTH = 2000;
+
 export function DescriptionStep() {
   const { propertyData, updatePropertyData } = useWizardStore();
   const [localDescription, setLocalDescription] = React.useState((propertyData.description as string) || '');
@@ -35,8 +37,17 @@ export function DescriptionStep() {
           placeholder="e.g. Describe this luxury semi-detached duplex in Lekki Phase 1, Ikoyi, or Victoria Island. Mention the premium finishes, proximity to Admiralty Way, and the spacious BQ..."
           value={localDescription}
           onChange={(e) => setLocalDescription(e.target.value)}
+          maxLength={MAX_DESCRIPTION_LENGTH}
           className="min-h-[200px] text-lg p-5 border-2 border-primary/10 focus:border-primary transition-all duration-300 bg-background/50 rounded-xl resize-none"
+          aria-describedby="description-counter"
         />
+        <div
+          id="description-counter"
+          className="flex justify-end text-xs text-muted-foreground"
+          aria-live={localDescription.length > MAX_DESCRIPTION_LENGTH * 0.9 ? "polite" : "off"}
+        >
+          {localDescription.length} / {MAX_DESCRIPTION_LENGTH} characters
+        </div>
       </div>
 
       <div className="text-center text-xs text-muted-foreground/50 uppercase tracking-widest">
