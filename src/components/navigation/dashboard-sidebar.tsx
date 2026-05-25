@@ -23,6 +23,11 @@ import {
 } from 'lucide-react';
 import { signOut } from 'next-auth/react';
 import { cn } from '@/lib/utils';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 const NAV_ITEMS = [
   { href: '/dashboard', label: 'My Pages', icon: LayoutDashboard },
@@ -90,7 +95,7 @@ export function DashboardSidebar({
           const Icon = item.icon;
           const active = isActive(item.href);
           
-          return (
+          const content = (
             <Link
               key={item.href}
               href={item.href}
@@ -100,6 +105,7 @@ export function DashboardSidebar({
                   ? 'bg-emerald-600/20 text-emerald-400'
                   : 'text-slate-400 hover:bg-slate-800 hover:text-white'
               )}
+              aria-label={isCollapsed ? item.label : undefined}
             >
               {/* Active Indicator Bar */}
               {active && (
@@ -115,15 +121,23 @@ export function DashboardSidebar({
               {!isCollapsed && (
                 <span className="font-medium text-sm">{item.label}</span>
               )}
-              
-              {/* Tooltip for collapsed state */}
-              {isCollapsed && (
-                <div className="absolute left-full ml-2 px-3 py-1.5 bg-slate-800 text-white text-sm rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all whitespace-nowrap z-50">
-                  {item.label}
-                </div>
-              )}
             </Link>
           );
+
+          if (isCollapsed) {
+            return (
+              <Tooltip key={item.href} delayDuration={0}>
+                <TooltipTrigger asChild>
+                  {content}
+                </TooltipTrigger>
+                <TooltipContent side="right">
+                  {item.label}
+                </TooltipContent>
+              </Tooltip>
+            );
+          }
+
+          return content;
         })}
       </nav>
 
@@ -154,16 +168,30 @@ export function DashboardSidebar({
 
       {/* Logout */}
       <div className="p-4 border-t border-slate-800">
-        <button
-          onClick={() => signOut({ callbackUrl: '/login' })}
-          className={cn(
-            'flex items-center gap-3 w-full px-4 py-3 text-slate-400 hover:text-red-400 hover:bg-slate-800 rounded-lg transition-all duration-300',
-            isCollapsed ? 'justify-center' : ''
-          )}
-        >
-          <LogOut className="w-5 h-5" />
-          {!isCollapsed && <span className="font-medium text-sm">Sign Out</span>}
-        </button>
+        {isCollapsed ? (
+          <Tooltip delayDuration={0}>
+            <TooltipTrigger asChild>
+              <button
+                onClick={() => signOut({ callbackUrl: '/login' })}
+                className="flex items-center justify-center gap-3 w-full px-4 py-3 text-slate-400 hover:text-red-400 hover:bg-slate-800 rounded-lg transition-all duration-300"
+                aria-label="Sign Out"
+              >
+                <LogOut className="w-5 h-5" />
+              </button>
+            </TooltipTrigger>
+            <TooltipContent side="right">
+              Sign Out
+            </TooltipContent>
+          </Tooltip>
+        ) : (
+          <button
+            onClick={() => signOut({ callbackUrl: '/login' })}
+            className="flex items-center gap-3 w-full px-4 py-3 text-slate-400 hover:text-red-400 hover:bg-slate-800 rounded-lg transition-all duration-300"
+          >
+            <LogOut className="w-5 h-5" />
+            <span className="font-medium text-sm">Sign Out</span>
+          </button>
+        )}
       </div>
 
       {/* Collapse Toggle - Hide on mobile */}
