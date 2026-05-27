@@ -21,3 +21,18 @@ export const parseNumericValue = (value: string) => {
   // Only allow digits, remove currency symbols and commas
   return value.replace(/[^0-9]/g, '');
 }
+
+/**
+ * Formats a number into a human-readable magnitude (e.g. 150 million Naira)
+ */
+export const formatMagnitude = (value: number | string) => {
+  const num = typeof value === 'string' ? parseFloat(value.replace(/,/g, '')) : value;
+  if (!num || isNaN(num) || num === 0) return '';
+
+  const magnitude = new Intl.NumberFormat('en-NG', {
+    notation: 'compact',
+    compactDisplay: 'long',
+  }).format(num);
+
+  return `${magnitude} Naira`;
+};
