@@ -23,6 +23,11 @@ import {
 } from 'lucide-react';
 import { signOut } from 'next-auth/react';
 import { cn } from '@/lib/utils';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 const NAV_ITEMS = [
   { href: '/dashboard', label: 'My Pages', icon: LayoutDashboard },
@@ -72,16 +77,30 @@ export function DashboardSidebar({
 
       {/* Create New Button */}
       <div className="p-4">
-        <Link
-          href="/builder"
-          className={cn(
-            'flex items-center justify-center gap-2 py-3 bg-emerald-600 text-white font-bold uppercase tracking-widest text-sm hover:bg-emerald-500 transition-all rounded-lg shadow-lg shadow-emerald-900/50',
-            isCollapsed ? 'px-2' : 'px-4'
-          )}
-        >
-          <Plus className="w-5 h-5" />
-          {!isCollapsed && <span>New Page</span>}
-        </Link>
+        {isCollapsed ? (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link
+                href="/builder"
+                aria-label="New Page"
+                className="flex items-center justify-center gap-2 py-3 bg-emerald-600 text-white font-bold uppercase tracking-widest text-sm hover:bg-emerald-500 transition-all rounded-lg shadow-lg shadow-emerald-900/50 px-2"
+              >
+                <Plus className="w-5 h-5" />
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent side="right">
+              New Page
+            </TooltipContent>
+          </Tooltip>
+        ) : (
+          <Link
+            href="/builder"
+            className="flex items-center justify-center gap-2 py-3 bg-emerald-600 text-white font-bold uppercase tracking-widest text-sm hover:bg-emerald-500 transition-all rounded-lg shadow-lg shadow-emerald-900/50 px-4"
+          >
+            <Plus className="w-5 h-5" />
+            <span>New Page</span>
+          </Link>
+        )}
       </div>
 
       {/* Navigation */}
@@ -90,10 +109,11 @@ export function DashboardSidebar({
           const Icon = item.icon;
           const active = isActive(item.href);
           
-          return (
+          const linkContent = (
             <Link
               key={item.href}
               href={item.href}
+              aria-label={isCollapsed ? item.label : undefined}
               className={cn(
                 'flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 group relative',
                 active
@@ -115,15 +135,23 @@ export function DashboardSidebar({
               {!isCollapsed && (
                 <span className="font-medium text-sm">{item.label}</span>
               )}
-              
-              {/* Tooltip for collapsed state */}
-              {isCollapsed && (
-                <div className="absolute left-full ml-2 px-3 py-1.5 bg-slate-800 text-white text-sm rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all whitespace-nowrap z-50">
-                  {item.label}
-                </div>
-              )}
             </Link>
           );
+
+          if (isCollapsed) {
+            return (
+              <Tooltip key={item.href}>
+                <TooltipTrigger asChild>
+                  {linkContent}
+                </TooltipTrigger>
+                <TooltipContent side="right">
+                  {item.label}
+                </TooltipContent>
+              </Tooltip>
+            );
+          }
+
+          return linkContent;
         })}
       </nav>
 
@@ -154,16 +182,30 @@ export function DashboardSidebar({
 
       {/* Logout */}
       <div className="p-4 border-t border-slate-800">
-        <button
-          onClick={() => signOut({ callbackUrl: '/login' })}
-          className={cn(
-            'flex items-center gap-3 w-full px-4 py-3 text-slate-400 hover:text-red-400 hover:bg-slate-800 rounded-lg transition-all duration-300',
-            isCollapsed ? 'justify-center' : ''
-          )}
-        >
-          <LogOut className="w-5 h-5" />
-          {!isCollapsed && <span className="font-medium text-sm">Sign Out</span>}
-        </button>
+        {isCollapsed ? (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button
+                onClick={() => signOut({ callbackUrl: '/login' })}
+                aria-label="Sign Out"
+                className="flex items-center justify-center gap-3 w-full px-4 py-3 text-slate-400 hover:text-red-400 hover:bg-slate-800 rounded-lg transition-all duration-300"
+              >
+                <LogOut className="w-5 h-5" />
+              </button>
+            </TooltipTrigger>
+            <TooltipContent side="right">
+              Sign Out
+            </TooltipContent>
+          </Tooltip>
+        ) : (
+          <button
+            onClick={() => signOut({ callbackUrl: '/login' })}
+            className="flex items-center gap-3 w-full px-4 py-3 text-slate-400 hover:text-red-400 hover:bg-slate-800 rounded-lg transition-all duration-300"
+          >
+            <LogOut className="w-5 h-5" />
+            <span className="font-medium text-sm">Sign Out</span>
+          </button>
+        )}
       </div>
 
       {/* Collapse Toggle - Hide on mobile */}
