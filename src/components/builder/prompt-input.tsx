@@ -109,11 +109,15 @@ export function PromptInput({
         {/* Character Count */}
         <div
           className={cn(
-            'absolute bottom-2 right-2 text-xs',
+            'absolute bottom-2 right-2 text-xs font-medium',
             'transition-colors duration-200',
-            isNearLimit ? 'text-amber-500' : 'text-muted-foreground',
-            characterCount >= maxLength && 'text-destructive'
+            characterCount >= maxLength * 0.9
+              ? 'text-destructive'
+              : isNearLimit
+                ? 'text-amber-500'
+                : 'text-muted-foreground'
           )}
+          aria-live="polite"
         >
           {characterCount}/{maxLength}
         </div>
