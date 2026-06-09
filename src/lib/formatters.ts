@@ -21,3 +21,24 @@ export const parseNumericValue = (value: string) => {
   // Only allow digits, remove currency symbols and commas
   return value.replace(/[^0-9]/g, '');
 }
+
+export const formatPriceInWords = (amount: number): string => {
+  if (!amount || amount <= 0) return '';
+
+  if (amount >= 1_000_000_000) {
+    const value = Math.round(amount / 100_000_000) / 10;
+    return `${value} Billion Naira`;
+  }
+
+  if (amount >= 1_000_000) {
+    const value = Math.round(amount / 100_000) / 10;
+    return `${value} Million Naira`;
+  }
+
+  if (amount >= 1_000) {
+    const value = Math.round(amount / 100) / 10;
+    return `${value} Thousand Naira`;
+  }
+
+  return `${amount} Naira`;
+};
