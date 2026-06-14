@@ -4,10 +4,11 @@ import React from 'react';
 import { Label } from '@/components/ui/label';
 import { BigInput } from '../big-input';
 import { useWizardStore } from '../../store/wizard-store';
-import { formatNumberWithCommas, parseNumericValue } from '@/lib/formatters';
+import { formatNumberWithCommas, parseNumericValue, formatPriceInWords } from '@/lib/formatters';
 
 export function PriceStep() {
   const { propertyData, updatePropertyData } = useWizardStore();
+  const priceInWords = formatPriceInWords(propertyData.price || 0);
 
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const rawValue = parseNumericValue(e.target.value);
@@ -40,9 +41,17 @@ export function PriceStep() {
           inputMode="numeric"
           data-testid="price-input"
         />
+        {priceInWords && (
+          <div
+            className="text-center text-emerald-600 font-bold text-lg animate-in fade-in slide-in-from-top-1 duration-300"
+            aria-live="polite"
+          >
+            {priceInWords}
+          </div>
+        )}
       </div>
 
-      <div className="text-center text-xs text-muted-foreground/50 uppercase tracking-widest">
+      <div className="text-center text-xs text-muted-foreground/50 uppercase tracking-widest pt-4">
         Competitive pricing targets the right leads.
       </div>
     </div>
