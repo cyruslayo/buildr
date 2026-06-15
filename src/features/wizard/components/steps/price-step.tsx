@@ -4,7 +4,7 @@ import React from 'react';
 import { Label } from '@/components/ui/label';
 import { BigInput } from '../big-input';
 import { useWizardStore } from '../../store/wizard-store';
-import { formatNumberWithCommas, parseNumericValue } from '@/lib/formatters';
+import { formatNumberWithCommas, parseNumericValue, formatPriceInWords } from '@/lib/formatters';
 
 export function PriceStep() {
   const { propertyData, updatePropertyData } = useWizardStore();
@@ -19,6 +19,7 @@ export function PriceStep() {
   };
 
   const displayValue = propertyData.price ? formatNumberWithCommas(propertyData.price) : '';
+  const priceInWords = formatPriceInWords(propertyData.price || 0);
 
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -40,6 +41,16 @@ export function PriceStep() {
           inputMode="numeric"
           data-testid="price-input"
         />
+
+        {priceInWords && (
+          <div
+            key={priceInWords}
+            className="text-center text-primary font-medium animate-in fade-in slide-in-from-top-1 duration-300"
+            aria-live="polite"
+          >
+            {priceInWords}
+          </div>
+        )}
       </div>
 
       <div className="text-center text-xs text-muted-foreground/50 uppercase tracking-widest">
