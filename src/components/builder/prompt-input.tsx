@@ -64,7 +64,8 @@ export function PromptInput({
   }, [value]);
 
   const characterCount = value.length;
-  const isNearLimit = characterCount > maxLength * 0.8;
+  const isAmber = characterCount >= maxLength * 0.8;
+  const isRed = characterCount >= maxLength * 0.9;
 
   return (
     <div className={cn('relative w-full', className)}>
@@ -109,13 +110,13 @@ export function PromptInput({
         {/* Character Count */}
         <div
           className={cn(
-            'absolute bottom-2 right-2 text-xs',
+            'absolute bottom-2 right-2 text-xs font-medium',
             'transition-colors duration-200',
-            isNearLimit ? 'text-amber-500' : 'text-muted-foreground',
-            characterCount >= maxLength && 'text-destructive'
+            isRed ? 'text-destructive' : isAmber ? 'text-amber-500' : 'text-muted-foreground'
           )}
+          aria-live="polite"
         >
-          {characterCount}/{maxLength}
+          {characterCount.toLocaleString()}/{maxLength.toLocaleString()}
         </div>
       </div>
 
