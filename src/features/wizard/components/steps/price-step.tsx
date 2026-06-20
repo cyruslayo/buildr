@@ -4,7 +4,7 @@ import React from 'react';
 import { Label } from '@/components/ui/label';
 import { BigInput } from '../big-input';
 import { useWizardStore } from '../../store/wizard-store';
-import { formatNumberWithCommas, parseNumericValue } from '@/lib/formatters';
+import { formatNumberWithCommas, parseNumericValue, formatNairaMagnitude } from '@/lib/formatters';
 
 export function PriceStep() {
   const { propertyData, updatePropertyData } = useWizardStore();
@@ -19,6 +19,7 @@ export function PriceStep() {
   };
 
   const displayValue = propertyData.price ? formatNumberWithCommas(propertyData.price) : '';
+  const magnitude = propertyData.price ? formatNairaMagnitude(propertyData.price) : '';
 
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -40,6 +41,11 @@ export function PriceStep() {
           inputMode="numeric"
           data-testid="price-input"
         />
+        {magnitude && (
+          <p className="text-center text-emerald-500 font-medium animate-in fade-in slide-in-from-top-1 duration-500">
+            {magnitude}
+          </p>
+        )}
       </div>
 
       <div className="text-center text-xs text-muted-foreground/50 uppercase tracking-widest">
