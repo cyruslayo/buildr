@@ -4,7 +4,7 @@ import React from 'react';
 import { Label } from '@/components/ui/label';
 import { BigInput } from '../big-input';
 import { useWizardStore } from '../../store/wizard-store';
-import { formatNumberWithCommas, parseNumericValue } from '@/lib/formatters';
+import { formatNumberWithCommas, parseNumericValue, formatPriceMagnitude } from '@/lib/formatters';
 
 export function PriceStep() {
   const { propertyData, updatePropertyData } = useWizardStore();
@@ -19,6 +19,7 @@ export function PriceStep() {
   };
 
   const displayValue = propertyData.price ? formatNumberWithCommas(propertyData.price) : '';
+  const magnitude = propertyData.price ? formatPriceMagnitude(propertyData.price) : '';
 
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -31,18 +32,27 @@ export function PriceStep() {
         <Label htmlFor="price-input" className="block text-center text-xs font-medium uppercase tracking-widest text-muted-foreground/60">
           Asking Price
         </Label>
-        <BigInput
-          id="price-input"
-          prefix="₦"
-          placeholder="e.g. 150,000,000"
-          value={displayValue}
-          onChange={handlePriceChange}
-          inputMode="numeric"
-          data-testid="price-input"
-        />
+        <div className="relative group">
+          <BigInput
+            id="price-input"
+            prefix="₦"
+            placeholder="e.g. 150,000,000"
+            value={displayValue}
+            onChange={handlePriceChange}
+            inputMode="numeric"
+            data-testid="price-input"
+          />
+          {magnitude && (
+            <div className="absolute -bottom-2 left-0 right-0 text-center animate-in fade-in slide-in-from-top-1 duration-500">
+              <span className="text-sm font-medium text-primary/60 bg-primary/5 px-3 py-1 rounded-full border border-primary/10">
+                {magnitude}
+              </span>
+            </div>
+          )}
+        </div>
       </div>
 
-      <div className="text-center text-xs text-muted-foreground/50 uppercase tracking-widest">
+      <div className="pt-4 text-center text-xs text-muted-foreground/50 uppercase tracking-widest">
         Competitive pricing targets the right leads.
       </div>
     </div>
