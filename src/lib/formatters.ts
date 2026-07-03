@@ -21,3 +21,19 @@ export const parseNumericValue = (value: string) => {
   // Only allow digits, remove currency symbols and commas
   return value.replace(/[^0-9]/g, '');
 }
+
+/**
+ * Converts a large numeric price into a human-readable magnitude
+ * e.g., 150000000 -> "150 Million"
+ */
+export const formatPriceMagnitude = (value: number) => {
+  if (!value || value === 0) return '';
+  if (value < 1000) return value.toString();
+  if (value < 1000000) {
+    return `${(value / 1000).toFixed(1).replace(/\.0$/, '')} Thousand`;
+  }
+  if (value < 1000000000) {
+    return `${(value / 1000000).toFixed(1).replace(/\.0$/, '')} Million`;
+  }
+  return `${(value / 1000000000).toFixed(1).replace(/\.0$/, '')} Billion`;
+};
