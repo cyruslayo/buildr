@@ -4,21 +4,22 @@ import React from 'react';
 import { Label } from '@/components/ui/label';
 import { BigInput } from '../big-input';
 import { useWizardStore } from '../../store/wizard-store';
-import { formatNumberWithCommas, parseNumericValue } from '@/lib/formatters';
+import { formatNumberWithCommas, parseNumericValue, formatPriceMagnitude } from '@/lib/formatters';
 
 export function PriceStep() {
   const { propertyData, updatePropertyData } = useWizardStore();
 
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const rawValue = parseNumericValue(e.target.value);
-    // Sanity check: prevent extremely large numbers (> 1 Billion)
-    if (rawValue.length > 12) return; 
+    // Sanity check: prevent extremely large numbers (> 1 Trillion)
+    if (rawValue.length > 13) return;
     
     const numericValue = rawValue === '' ? 0 : parseInt(rawValue, 10);
     updatePropertyData({ price: numericValue });
   };
 
   const displayValue = propertyData.price ? formatNumberWithCommas(propertyData.price) : '';
+  const magnitude = propertyData.price ? formatPriceMagnitude(propertyData.price) : '';
 
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -40,6 +41,13 @@ export function PriceStep() {
           inputMode="numeric"
           data-testid="price-input"
         />
+        <div className="h-8 flex items-center justify-center">
+          {magnitude && (
+            <span className="text-emerald-500 font-bold uppercase tracking-widest animate-in fade-in zoom-in duration-300">
+              {magnitude} Naira
+            </span>
+          )}
+        </div>
       </div>
 
       <div className="text-center text-xs text-muted-foreground/50 uppercase tracking-widest">
