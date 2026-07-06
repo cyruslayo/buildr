@@ -4,7 +4,7 @@ import React from 'react';
 import { Label } from '@/components/ui/label';
 import { BigInput } from '../big-input';
 import { useWizardStore } from '../../store/wizard-store';
-import { formatNumberWithCommas, parseNumericValue } from '@/lib/formatters';
+import { formatNumberWithCommas, parseNumericValue, formatPriceMagnitude } from '@/lib/formatters';
 
 export function PriceStep() {
   const { propertyData, updatePropertyData } = useWizardStore();
@@ -19,6 +19,7 @@ export function PriceStep() {
   };
 
   const displayValue = propertyData.price ? formatNumberWithCommas(propertyData.price) : '';
+  const magnitudeLabel = propertyData.price ? formatPriceMagnitude(propertyData.price) : '';
 
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -38,8 +39,22 @@ export function PriceStep() {
           value={displayValue}
           onChange={handlePriceChange}
           inputMode="numeric"
+          aria-describedby="price-magnitude"
           data-testid="price-input"
         />
+
+        {/* Magnitude Confirmation Label */}
+        <div className="h-8 -mt-4 flex justify-center items-start">
+          {magnitudeLabel && (
+            <span
+              id="price-magnitude"
+              className="text-emerald-500 font-bold uppercase tracking-[0.2em] text-[10px] animate-in fade-in zoom-in-95 duration-500"
+              aria-live="polite"
+            >
+              {magnitudeLabel}
+            </span>
+          )}
+        </div>
       </div>
 
       <div className="text-center text-xs text-muted-foreground/50 uppercase tracking-widest">
