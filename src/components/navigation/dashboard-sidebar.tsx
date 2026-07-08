@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 import { signOut } from 'next-auth/react';
 import { cn } from '@/lib/utils';
+import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
 
 const NAV_ITEMS = [
   { href: '/dashboard', label: 'My Pages', icon: LayoutDashboard },
@@ -89,40 +90,26 @@ export function DashboardSidebar({
         {NAV_ITEMS.map((item) => {
           const Icon = item.icon;
           const active = isActive(item.href);
-          
           return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(
-                'flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 group relative',
-                active
-                  ? 'bg-emerald-600/20 text-emerald-400'
-                  : 'text-slate-400 hover:bg-slate-800 hover:text-white'
-              )}
-            >
-              {/* Active Indicator Bar */}
-              {active && (
-                <motion.div
-                  layoutId="sidebar-active"
-                  className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-emerald-500 rounded-r-full"
-                  transition={{ type: 'spring', damping: 20, stiffness: 300 }}
-                />
-              )}
-              
-              <Icon className={cn('w-5 h-5 shrink-0', active && 'text-emerald-400')} />
-              
-              {!isCollapsed && (
-                <span className="font-medium text-sm">{item.label}</span>
-              )}
-              
-              {/* Tooltip for collapsed state */}
-              {isCollapsed && (
-                <div className="absolute left-full ml-2 px-3 py-1.5 bg-slate-800 text-white text-sm rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all whitespace-nowrap z-50">
-                  {item.label}
-                </div>
-              )}
-            </Link>
+            <Tooltip key={item.href} delayDuration={0}>
+              <TooltipTrigger asChild>
+                <Link
+                  href={item.href}
+                  aria-label={isCollapsed ? item.label : undefined}
+                  className={cn(
+                    'flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 group relative',
+                    active ? 'bg-emerald-600/20 text-emerald-400' : 'text-slate-400 hover:bg-slate-800 hover:text-white'
+                  )}
+                >
+                  {active && (
+                    <motion.div layoutId="sidebar-active" className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-emerald-500 rounded-r-full" />
+                  )}
+                  <Icon className={cn('w-5 h-5 shrink-0', active && 'text-emerald-400')} />
+                  {!isCollapsed && <span className="font-medium text-sm">{item.label}</span>}
+                </Link>
+              </TooltipTrigger>
+              {isCollapsed && <TooltipContent side="right" sideOffset={10}>{item.label}</TooltipContent>}
+            </Tooltip>
           );
         })}
       </nav>
