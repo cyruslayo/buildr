@@ -21,3 +21,14 @@ export const parseNumericValue = (value: string) => {
   // Only allow digits, remove currency symbols and commas
   return value.replace(/[^0-9]/g, '');
 }
+
+export const formatPriceMagnitude = (value: number) => {
+  if (value < 1000) return "";
+  if (value < 1000000) {
+    return `${(value / 1000).toFixed(1).replace(/\.0$/, "")} Thousand`;
+  }
+  if (value < 1000000000) {
+    return `${(value / 1000000).toFixed(1).replace(/\.0$/, "")} Million`;
+  }
+  return `${(value / 1000000000).toFixed(1).replace(/\.0$/, "")} Billion`;
+};
