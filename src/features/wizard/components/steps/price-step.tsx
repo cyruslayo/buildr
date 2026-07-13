@@ -4,7 +4,7 @@ import React from 'react';
 import { Label } from '@/components/ui/label';
 import { BigInput } from '../big-input';
 import { useWizardStore } from '../../store/wizard-store';
-import { formatNumberWithCommas, parseNumericValue } from '@/lib/formatters';
+import { formatNumberWithCommas, parseNumericValue, formatPriceMagnitude } from '@/lib/formatters';
 
 export function PriceStep() {
   const { propertyData, updatePropertyData } = useWizardStore();
@@ -40,6 +40,13 @@ export function PriceStep() {
           inputMode="numeric"
           data-testid="price-input"
         />
+        <div className="h-8 flex items-center justify-center">
+          {propertyData.price >= 1000 && (
+            <span className="text-emerald-500 font-bold uppercase tracking-widest text-sm animate-in fade-in zoom-in duration-300">
+              {formatPriceMagnitude(propertyData.price)}
+            </span>
+          )}
+        </div>
       </div>
 
       <div className="text-center text-xs text-muted-foreground/50 uppercase tracking-widest">
