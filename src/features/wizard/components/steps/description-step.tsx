@@ -4,11 +4,13 @@ import React from 'react';
 import { useWizardStore } from '../../store/wizard-store';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
+import { cn } from '@/lib/utils';
 
 export function DescriptionStep() {
   const { propertyData, updatePropertyData } = useWizardStore();
   const [localDescription, setLocalDescription] = React.useState((propertyData.description as string) || '');
 
+  // Debounced update to store
   React.useEffect(() => {
     const timer = setTimeout(() => {
       if (localDescription !== propertyData.description) {
@@ -18,6 +20,17 @@ export function DescriptionStep() {
 
     return () => clearTimeout(timer);
   }, [localDescription, updatePropertyData, propertyData.description]);
+
+  // Sync from store (for external updates)
+  React.useEffect(() => {
+    const storeDescription = (propertyData.description as string) || '';
+    setLocalDescription(storeDescription);
+  }, [propertyData.description]);
+
+  const maxLength = 2000;
+  const characterCount = localDescription.length;
+  const isWarning = characterCount >= maxLength * 0.8;
+  const isDanger = characterCount >= maxLength * 0.9;
 
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -30,13 +43,27 @@ export function DescriptionStep() {
         <Label htmlFor="property-description" className="text-sm font-medium uppercase tracking-wider text-muted-foreground">
           Describe the property
         </Label>
-        <Textarea
-          id="property-description"
-          placeholder="e.g. Describe this luxury semi-detached duplex in Lekki Phase 1, Ikoyi, or Victoria Island. Mention the premium finishes, proximity to Admiralty Way, and the spacious BQ..."
-          value={localDescription}
-          onChange={(e) => setLocalDescription(e.target.value)}
-          className="min-h-[200px] text-lg p-5 border-2 border-primary/10 focus:border-primary transition-all duration-300 bg-background/50 rounded-xl resize-none"
-        />
+        <div className="relative">
+          <Textarea
+            id="property-description"
+            placeholder="e.g. Describe this luxury semi-detached duplex in Lekki Phase 1, Ikoyi, or Victoria Island. Mention the premium finishes, proximity to Admiralty Way, and the spacious BQ..."
+            value={localDescription}
+            onChange={(e) => setLocalDescription(e.target.value)}
+            maxLength={maxLength}
+            aria-describedby="description-counter"
+            className="min-h-[200px] text-lg p-5 pb-12 border-2 border-primary/10 focus:border-primary transition-all duration-300 bg-background/50 rounded-xl resize-none"
+          />
+          <div
+            id="description-counter"
+            aria-live="polite"
+            className={cn(
+              "absolute bottom-4 right-5 text-xs font-medium transition-colors duration-200",
+              isDanger ? "text-destructive" : isWarning ? "text-amber-500" : "text-muted-foreground/60"
+            )}
+          >
+            {characterCount}/{maxLength}
+          </div>
+        </div>
       </div>
 
       <div className="text-center text-xs text-muted-foreground/50 uppercase tracking-widest">
