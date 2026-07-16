@@ -54,4 +54,58 @@ describe('DescriptionStep Component', () => {
     
     expect(screen.getByDisplayValue('Existing description')).toBeInTheDocument();
   });
+
+  it('renders character counter with correct count', () => {
+    (useWizardStore as unknown as jest.Mock).mockReturnValue({
+      propertyData: { description: 'Hello world' },
+      updatePropertyData: mockUpdatePropertyData,
+    });
+
+    render(<DescriptionStep />);
+
+    expect(screen.getByText('11/2000')).toBeInTheDocument();
+  });
+
+  it('applies warning color when nearing character limit (80%)', () => {
+    const nearLimitDescription = 'a'.repeat(1600);
+    (useWizardStore as unknown as jest.Mock).mockReturnValue({
+      propertyData: { description: nearLimitDescription },
+      updatePropertyData: mockUpdatePropertyData,
+    });
+
+    render(<DescriptionStep />);
+
+    const counter = screen.getByText('1600/2000');
+    expect(counter).toHaveClass('text-amber-500');
+  });
+
+  it('applies destructive color when very close to character limit (90%)', () => {
+    const dangerDescription = 'a'.repeat(1800);
+    (useWizardStore as unknown as jest.Mock).mockReturnValue({
+      propertyData: { description: dangerDescription },
+      updatePropertyData: mockUpdatePropertyData,
+    });
+
+    render(<DescriptionStep />);
+
+    const counter = screen.getByText('1800/2000');
+    expect(counter).toHaveClass('text-destructive');
+  });
+
+  it('syncs local state when store description changes externally', () => {
+    const { rerender } = render(<DescriptionStep />);
+
+    expect(screen.getByPlaceholderText(/Describe this luxury semi-detached duplex/i)).toHaveValue('');
+
+    // Simulate external update
+    (useWizardStore as unknown as jest.Mock).mockReturnValue({
+      propertyData: { description: 'External update' },
+      updatePropertyData: mockUpdatePropertyData,
+    });
+
+    rerender(<DescriptionStep />);
+
+    expect(screen.getByPlaceholderText(/Describe this luxury semi-detached duplex/i)).toHaveValue('External update');
+    expect(screen.getByText('15/2000')).toBeInTheDocument();
+  });
 });
