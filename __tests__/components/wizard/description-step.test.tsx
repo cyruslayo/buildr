@@ -26,6 +26,7 @@ describe('DescriptionStep Component', () => {
     
     expect(screen.getByText(/Property Description/i)).toBeInTheDocument();
     expect(screen.getByPlaceholderText(/Describe this luxury semi-detached duplex/i)).toBeInTheDocument();
+    expect(screen.getByText(/0\/2000/i)).toBeInTheDocument();
   });
 
   it('updates the store when the description text changes', async () => {
