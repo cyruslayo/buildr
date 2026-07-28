@@ -30,13 +30,30 @@ export function DescriptionStep() {
         <Label htmlFor="property-description" className="text-sm font-medium uppercase tracking-wider text-muted-foreground">
           Describe the property
         </Label>
-        <Textarea
-          id="property-description"
-          placeholder="e.g. Describe this luxury semi-detached duplex in Lekki Phase 1, Ikoyi, or Victoria Island. Mention the premium finishes, proximity to Admiralty Way, and the spacious BQ..."
-          value={localDescription}
-          onChange={(e) => setLocalDescription(e.target.value)}
-          className="min-h-[200px] text-lg p-5 border-2 border-primary/10 focus:border-primary transition-all duration-300 bg-background/50 rounded-xl resize-none"
-        />
+        <div className="relative">
+          <Textarea
+            id="property-description"
+            placeholder="e.g. Describe this luxury semi-detached duplex in Lekki Phase 1, Ikoyi, or Victoria Island. Mention the premium finishes, proximity to Admiralty Way, and the spacious BQ..."
+            value={localDescription}
+            onChange={(e) => setLocalDescription(e.target.value)}
+            maxLength={2000}
+            aria-describedby="description-char-count"
+            className="min-h-[200px] text-lg p-5 pb-12 border-2 border-primary/10 focus:border-primary transition-all duration-300 bg-background/50 rounded-xl resize-none w-full"
+          />
+          <div
+            id="description-char-count"
+            aria-live="polite"
+            className={`absolute bottom-3 right-4 text-xs font-medium select-none transition-colors duration-200 ${
+              localDescription.length >= 1800
+                ? 'text-destructive'
+                : localDescription.length >= 1600
+                ? 'text-amber-500'
+                : 'text-muted-foreground'
+            }`}
+          >
+            {localDescription.length.toLocaleString()} / 2,000
+          </div>
+        </div>
       </div>
 
       <div className="text-center text-xs text-muted-foreground/50 uppercase tracking-widest">
