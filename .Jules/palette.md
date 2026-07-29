@@ -1,3 +1,7 @@
 ## 2025-05-15 - [Button Loading States & asChild Pattern]
 **Learning:** When adding loading states (like spinners) to base UI components that use the `asChild` pattern (e.g., Radix UI `Slot`), you must ensure that you don't inject sibling elements into the `Slot`. `Slot` expects a single child and will fail if multiple children are provided.
 **Action:** Always check for `asChild` before injecting extra UI elements into a component. If `asChild` is true, either skip the injection or require the child to handle its own loading state.
+
+## 2026-07-29 - [Standardizing Collapsed Navigation Sidebar Tooltips and Keyboard Access]
+**Learning:** Custom CSS-based tooltips in collapsed sidebars are non-standard, lack zero-latency responsiveness, and ignore keyboard/screen-reader accessibility. Standardizing them with Radix-based `Tooltip` components from `@/components/ui/tooltip` with `delayDuration={0}` provides an immediate, premium feel. To ensure screen-readers and keyboard navigation function flawlessly, interactive elements must have explicit, matching `aria-label` attributes, and non-interactive elements (like a `div` avatar) must have `tabIndex={0}` with focus-visible styles.
+**Action:** When working with sidebars that collapse into an icon-only or avatar-only state, always standardize their tooltips using the project's Radix tooltips and assign proper focusability (`tabIndex={0}`) and `aria-label` matching standard accessibility patterns.
