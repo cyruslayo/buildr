@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useCallback, useState } from 'react';
-import { useDropzone } from 'react-dropzone';
+import { useDropzone, FileRejection } from 'react-dropzone';
 import { X, Upload, Loader2, Image as ImageIcon } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
 import { cn } from '@/lib/utils';
@@ -41,10 +41,10 @@ export const ImageGridPicker: React.FC<ImageGridPickerProps> = ({
 
   const maxMB = Math.round(MAX_FILE_SIZE_BYTE / (1024 * 1024));
 
-  const onDrop = useCallback((acceptedFiles: File[], fileRejections: any[]) => {
+  const onDrop = useCallback((acceptedFiles: File[], fileRejections: FileRejection[]) => {
     if (fileRejections.length > 0) {
       const isTooLarge = fileRejections.some(rejection => 
-        rejection.errors.some((e: any) => e.code === 'file-too-large')
+        rejection.errors.some((e) => e.code === 'file-too-large')
       );
       
       if (isTooLarge) {
@@ -83,7 +83,7 @@ export const ImageGridPicker: React.FC<ImageGridPickerProps> = ({
               <AlertDescription>{error}</AlertDescription>
               <button 
                 onClick={() => setError(null)}
-                className="absolute right-3 top-3 p-1 rounded-md hover:bg-destructive/10 transition-colors"
+                className="absolute right-3 top-3 p-1 rounded-md hover:bg-destructive/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-destructive"
                 aria-label="Dismiss error"
               >
                 <X className="h-4 w-4" />
@@ -102,7 +102,7 @@ export const ImageGridPicker: React.FC<ImageGridPickerProps> = ({
             "col-span-12 md:col-span-5 aspect-[4/3] min-h-[300px]",
             "border-2 border-dashed rounded-2xl transition-all duration-300",
             "flex flex-col items-center justify-center cursor-pointer",
-            "bg-muted/30 backdrop-blur-sm",
+            "bg-muted/30 backdrop-blur-sm focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2",
             isDragActive ? "border-primary bg-primary/5 scale-[0.98]" : "border-muted-foreground/20 hover:border-primary/50"
           )}
         >
@@ -163,7 +163,7 @@ export const ImageGridPicker: React.FC<ImageGridPickerProps> = ({
                   <img src={url} alt={`Property ${index}`} className="w-full h-full object-cover" />
                   <button
                     onClick={() => onRemove(url)}
-                    className="absolute top-2 right-2 p-1.5 bg-black/50 hover:bg-black/70 text-white rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-90 group-hover:scale-100"
+                    className="absolute top-2 right-2 p-1.5 bg-black/50 hover:bg-black/70 text-white rounded-full opacity-0 group-hover:opacity-100 focus-visible:opacity-100 transition-all duration-300 transform scale-90 group-hover:scale-100 focus-visible:scale-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
                     aria-label={`Remove ${index === 0 ? 'Cover' : ''} Photo ${index + 1}`}
                   >
                     <X className="w-4 h-4" />
