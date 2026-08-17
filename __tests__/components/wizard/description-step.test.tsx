@@ -54,4 +54,12 @@ describe('DescriptionStep Component', () => {
     
     expect(screen.getByDisplayValue('Existing description')).toBeInTheDocument();
   });
+
+  it('renders character count and sets aria-describedby on textarea', () => {
+    render(<DescriptionStep />);
+
+    const textarea = screen.getByPlaceholderText(/Describe this luxury semi-detached duplex/i);
+    expect(textarea).toHaveAttribute('aria-describedby', 'description-char-count');
+    expect(screen.getByText('0/2000')).toBeInTheDocument();
+  });
 });
