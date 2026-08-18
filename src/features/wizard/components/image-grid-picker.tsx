@@ -163,7 +163,7 @@ export const ImageGridPicker: React.FC<ImageGridPickerProps> = ({
                   <img src={url} alt={`Property ${index}`} className="w-full h-full object-cover" />
                   <button
                     onClick={() => onRemove(url)}
-                    className="absolute top-2 right-2 p-1.5 bg-black/50 hover:bg-black/70 text-white rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-90 group-hover:scale-100"
+                    className="absolute top-2 right-2 p-1.5 bg-black/50 hover:bg-black/70 text-white rounded-full opacity-0 group-hover:opacity-100 focus-visible:opacity-100 focus-visible:scale-100 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 outline-none transition-all duration-300 transform scale-90 group-hover:scale-100"
                     aria-label={`Remove ${index === 0 ? 'Cover' : ''} Photo ${index + 1}`}
                   >
                     <X className="w-4 h-4" />
