@@ -6,7 +6,6 @@
  */
 
 import React, { useTransition } from 'react';
-import Image from 'next/image';
 import { Property, PropertyStatus } from '@prisma/client';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -33,12 +32,11 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import Link from 'next/link';
-import { MapPin, Home, EyeOff, Loader2, Trash2 } from 'lucide-react';
+import { MapPin, Home, EyeOff, Loader2, Trash2, ExternalLink, Copy } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { unpublishProperty } from '../actions/unpublish-property';
 import { deletePropertyDraft } from '../actions/delete-property';
 import { duplicateProperty } from '../actions/duplicate-property';
-import { Copy } from 'lucide-react';
 
 interface ListingCardProps {
   property: Property;
@@ -207,6 +205,7 @@ export function ListingCard({ property, isFeatured = false }: ListingCardProps) 
                     size="sm"
                     className="flex items-center gap-2 text-slate-400 hover:text-red-500 hover:bg-red-50 transition-colors h-12 md:h-8 px-4 md:px-2"
                     title="Unpublish this listing"
+                    aria-label={`Unpublish listing: ${property.title || 'Untitled Property'}`}
                   >
                     <EyeOff className="h-5 w-5 md:h-3.5 md:w-3.5" />
                     <span className="md:inline">Unpublish</span>
@@ -297,7 +296,16 @@ export function ListingCard({ property, isFeatured = false }: ListingCardProps) 
             </Button>
             {property.slug && (
               <Button asChild variant="link" className="p-0 h-auto text-primary font-semibold">
-                <Link href={`/property/${property.slug}`} target="_blank">View Live →</Link>
+                <Link
+                  href={`/p/${property.slug}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1"
+                >
+                  <span>View Live</span>
+                  <ExternalLink className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+                  <span className="sr-only">(opens in a new tab)</span>
+                </Link>
               </Button>
             )}
             <Button 
@@ -307,6 +315,7 @@ export function ListingCard({ property, isFeatured = false }: ListingCardProps) 
               disabled={isPending}
               className="flex items-center gap-2 text-slate-400 hover:text-primary hover:bg-primary/5 transition-colors h-12 md:h-8 px-4 md:px-2"
               title="Duplicate this listing"
+              aria-label={`Duplicate listing: ${property.title || 'Untitled Property'}`}
               data-testid={`duplicate-listing-${property.id}`}
             >
               {isPending ? (
