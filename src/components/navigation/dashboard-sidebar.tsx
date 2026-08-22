@@ -64,6 +64,7 @@ export function DashboardSidebar({
       <div className="p-6 border-b border-white/5 bg-slate-900/50 backdrop-blur-sm">
         <Link 
           href="/" 
+          aria-label="Buildr"
           className="font-display text-2xl font-bold tracking-tighter text-white hover:text-emerald-400 transition-colors"
         >
           {isCollapsed ? 'B.' : 'Buildr.'}
@@ -74,6 +75,7 @@ export function DashboardSidebar({
       <div className="p-4">
         <Link
           href="/builder"
+          aria-label="Create New Page"
           className={cn(
             'flex items-center justify-center gap-2 py-3 bg-emerald-600 text-white font-bold uppercase tracking-widest text-sm hover:bg-emerald-500 transition-all rounded-lg shadow-lg shadow-emerald-900/50',
             isCollapsed ? 'px-2' : 'px-4'
@@ -94,6 +96,7 @@ export function DashboardSidebar({
             <Link
               key={item.href}
               href={item.href}
+              aria-label={item.label}
               className={cn(
                 'flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 group relative',
                 active
@@ -156,6 +159,7 @@ export function DashboardSidebar({
       <div className="p-4 border-t border-slate-800">
         <button
           onClick={() => signOut({ callbackUrl: '/login' })}
+          aria-label="Sign Out"
           className={cn(
             'flex items-center gap-3 w-full px-4 py-3 text-slate-400 hover:text-red-400 hover:bg-slate-800 rounded-lg transition-all duration-300',
             isCollapsed ? 'justify-center' : ''
