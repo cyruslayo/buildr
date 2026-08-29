@@ -56,6 +56,15 @@ describe('ListingCard', () => {
     expect(editLink).toHaveAttribute('href', expect.stringContaining('/wizard?id=prop-1'));
   });
 
+  it('renders the "View Live" link pointing to /p/[slug] with proper accessible labels and attributes', () => {
+    render(<ListingCard property={mockProperty as any} />);
+
+    const viewLiveLink = screen.getByRole('link', { name: /view live lekki penthouse \(opens in new tab\)/i });
+    expect(viewLiveLink).toHaveAttribute('href', '/p/lekki-penthouse');
+    expect(viewLiveLink).toHaveAttribute('target', '_blank');
+    expect(viewLiveLink).toHaveAttribute('rel', 'noopener noreferrer');
+  });
+
   it('applies featured classes when isFeatured is true', () => {
     const { container } = render(<ListingCard property={mockProperty as any} isFeatured={true} />);
     
