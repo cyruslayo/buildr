@@ -10,9 +10,8 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Plus, FolderOpen, Sparkles, ArrowRight } from 'lucide-react';
+import { Plus, Sparkles, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
 import { ProjectCard } from './project-card';
 
 interface Project {
@@ -113,19 +112,22 @@ export function Dashboard({ projects }: DashboardProps) {
                     <Link
                       href={`/builder/${featuredProject.id}`}
                       className="inline-flex items-center gap-2 px-4 py-2 bg-slate-900 text-white text-sm font-medium hover:bg-slate-800 transition-colors rounded-lg"
+                      aria-label={`Edit ${featuredProject.name}`}
                     >
                       Edit Page
-                      <ArrowRight className="w-4 h-4" />
+                      <ArrowRight className="w-4 h-4" aria-hidden="true" />
                     </Link>
                     <Link
                       href={`/preview/${featuredProject.id}`}
                       className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-emerald-700 transition-colors"
+                      aria-label={`Preview ${featuredProject.name}`}
                     >
                       Preview
                     </Link>
                     <button
                       onClick={() => handleDelete(featuredProject.id)}
                       className="ml-auto text-sm text-slate-400 hover:text-red-600 transition-colors"
+                      aria-label={`Delete ${featuredProject.name}`}
                     >
                       Delete
                     </button>
