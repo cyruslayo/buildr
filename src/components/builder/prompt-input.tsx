@@ -25,6 +25,9 @@ export function PromptInput({
   const [value, setValue] = React.useState('');
   const textareaRef = React.useRef<HTMLTextAreaElement>(null);
 
+  const counterId = React.useId();
+  const hintId = React.useId();
+
   const handleSubmit = React.useCallback(() => {
     const trimmedValue = value.trim();
     if (!trimmedValue || isLoading) return;
@@ -75,6 +78,8 @@ export function PromptInput({
           onChange={handleChange}
           onKeyDown={handleKeyDown}
           placeholder={placeholder}
+          aria-label={placeholder}
+          aria-describedby={`${counterId} ${hintId}`}
           disabled={isLoading}
           className={cn(
             'min-h-[80px] resize-none pr-14 pb-8',
@@ -108,6 +113,7 @@ export function PromptInput({
 
         {/* Character Count */}
         <div
+          id={counterId}
           className={cn(
             'absolute bottom-2 right-2 text-xs',
             'transition-colors duration-200',
@@ -120,7 +126,7 @@ export function PromptInput({
       </div>
 
       {/* Keyboard Hint */}
-      <div className="mt-1 text-xs text-muted-foreground">
+      <div id={hintId} className="mt-1 text-xs text-muted-foreground">
         Press <kbd className="px-1 py-0.5 rounded bg-muted text-muted-foreground">Ctrl</kbd> + <kbd className="px-1 py-0.5 rounded bg-muted text-muted-foreground">Enter</kbd> to submit
       </div>
     </div>
