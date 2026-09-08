@@ -94,4 +94,22 @@ describe('PromptInput', () => {
     
     expect(onSubmit).not.toHaveBeenCalled();
   });
+
+  it('has accessible aria-label and aria-describedby attributes on textarea', () => {
+    render(<PromptInput onSubmit={jest.fn()} placeholder="Custom prompt label" />);
+
+    const textarea = screen.getByRole('textbox', { name: 'Custom prompt label' });
+    expect(textarea).toBeInTheDocument();
+
+    const describedBy = textarea.getAttribute('aria-describedby');
+    expect(describedBy).toBeTruthy();
+
+    const ids = describedBy?.split(' ') || [];
+    expect(ids.length).toBe(2);
+
+    // Check that elements with these IDs exist in document
+    ids.forEach((id) => {
+      expect(document.getElementById(id)).toBeInTheDocument();
+    });
+  });
 });
