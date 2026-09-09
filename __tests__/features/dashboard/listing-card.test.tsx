@@ -72,4 +72,14 @@ describe('ListingCard', () => {
     const deleteBtn = screen.getByLabelText(/delete draft: lekki penthouse/i);
     expect(deleteBtn).toBeInTheDocument();
   });
+
+  it('renders "View Live" link pointing to /p/[slug] with rel="noopener noreferrer" and proper aria-label', () => {
+    render(<ListingCard property={mockProperty as any} />);
+
+    const liveLink = screen.getByRole('link', { name: /view live lekki penthouse \(opens in new tab\)/i });
+    expect(liveLink).toBeInTheDocument();
+    expect(liveLink).toHaveAttribute('href', '/p/lekki-penthouse');
+    expect(liveLink).toHaveAttribute('target', '_blank');
+    expect(liveLink).toHaveAttribute('rel', 'noopener noreferrer');
+  });
 });

@@ -297,7 +297,14 @@ export function ListingCard({ property, isFeatured = false }: ListingCardProps) 
             </Button>
             {property.slug && (
               <Button asChild variant="link" className="p-0 h-auto text-primary font-semibold">
-                <Link href={`/property/${property.slug}`} target="_blank">View Live →</Link>
+                <Link
+                  href={`/p/${property.slug}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`View live ${property.title || 'Untitled Property'} (opens in new tab)`}
+                >
+                  View Live →
+                </Link>
               </Button>
             )}
             <Button 
