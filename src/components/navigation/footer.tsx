@@ -7,7 +7,7 @@
  */
 
 import Link from 'next/link';
-import { MapPin, Phone, Mail, MessageCircle } from 'lucide-react';
+import { MapPin, Mail, MessageCircle } from 'lucide-react';
 
 const QUICK_LINKS = [
   { href: '/#templates', label: 'Templates' },
@@ -106,6 +106,9 @@ export function Footer() {
               <li>
                 <a 
                   href="https://wa.me/2348000000000"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Chat on WhatsApp (opens in new tab)"
                   className="flex items-center gap-3 text-slate-300 hover:text-emerald-400 transition-colors"
                 >
                   <MessageCircle className="w-4 h-4 text-emerald-500" />
