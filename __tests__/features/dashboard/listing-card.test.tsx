@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { ListingCard } from '@/features/dashboard/components/listing-card';
-import { PropertyStatus } from '@prisma/client';
+import { Property, PropertyStatus } from '@prisma/client';
 
 const mockProperty = {
   id: 'prop-1',
@@ -26,22 +26,22 @@ const mockProperty = {
 
 // Mock Next.js Link
 jest.mock('next/link', () => {
-  return ({ children, href }: { children: React.ReactNode; href: string }) => (
-    <a href={href}>{children}</a>
+  return ({ children, href, ...props }: { children: React.ReactNode; href: string; [key: string]: unknown }) => (
+    <a href={href} {...props}>{children}</a>
   );
 });
 
 // Mock Framer Motion to avoid animation issues in tests
 jest.mock('framer-motion', () => ({
   motion: {
-    div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
+    div: ({ children, ...props }: { children: React.ReactNode; [key: string]: unknown }) => <div {...props}>{children}</div>,
   },
-  AnimatePresence: ({ children }: any) => <>{children}</>,
+  AnimatePresence: ({ children }: { children: React.ReactNode }) => <>{children}</>,
 }));
 
 describe('ListingCard', () => {
   it('renders property title and formatted price', () => {
-    render(<ListingCard property={mockProperty as any} />);
+    render(<ListingCard property={mockProperty as unknown as Property} />);
     
     expect(screen.getByText('Lekki Penthouse')).toBeInTheDocument();
     // Currency format for NGN 150,000,000 - exact string depends on locale, 
@@ -50,14 +50,14 @@ describe('ListingCard', () => {
   });
 
   it('renders the "Edit" button linking to the wizard', () => {
-    render(<ListingCard property={mockProperty as any} />);
+    render(<ListingCard property={mockProperty as unknown as Property} />);
     
     const editLink = screen.getByRole('link', { name: /edit/i });
     expect(editLink).toHaveAttribute('href', expect.stringContaining('/wizard?id=prop-1'));
   });
 
   it('applies featured classes when isFeatured is true', () => {
-    const { container } = render(<ListingCard property={mockProperty as any} isFeatured={true} />);
+    const { container } = render(<ListingCard property={mockProperty as unknown as Property} isFeatured={true} />);
     
     // Check for flex layout on the card
     const card = container.querySelector('.lg\\:flex');
@@ -66,10 +66,28 @@ describe('ListingCard', () => {
 
   it('has accessible individual delete button for drafts', () => {
     const draftProperty = { ...mockProperty, status: PropertyStatus.DRAFT };
-    render(<ListingCard property={draftProperty as any} />);
+    render(<ListingCard property={draftProperty as unknown as Property} />);
     
     // The button has aria-label from our previous story
     const deleteBtn = screen.getByLabelText(/delete draft: lekki penthouse/i);
     expect(deleteBtn).toBeInTheDocument();
+  });
+
+  it('renders "View Live" link with /p/[slug] route, rel="noopener noreferrer", and accessible label', () => {
+    render(<ListingCard property={mockProperty as unknown as Property} />);
+
+    const viewLiveLink = screen.getByLabelText(/view live lekki penthouse \(opens in new tab\)/i);
+    expect(viewLiveLink).toBeInTheDocument();
+    expect(viewLiveLink).toHaveAttribute('href', '/p/lekki-penthouse');
+    expect(viewLiveLink).toHaveAttribute('target', '_blank');
+    expect(viewLiveLink).toHaveAttribute('rel', 'noopener noreferrer');
+  });
+
+  it('renders action buttons with explicit aria-labels', () => {
+    render(<ListingCard property={mockProperty as unknown as Property} />);
+
+    expect(screen.getByLabelText('Edit Lekki Penthouse')).toBeInTheDocument();
+    expect(screen.getByLabelText('Unpublish Lekki Penthouse')).toBeInTheDocument();
+    expect(screen.getByLabelText('Duplicate Lekki Penthouse')).toBeInTheDocument();
   });
 });
