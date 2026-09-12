@@ -26,8 +26,8 @@ const mockProperty = {
 
 // Mock Next.js Link
 jest.mock('next/link', () => {
-  return ({ children, href }: { children: React.ReactNode; href: string }) => (
-    <a href={href}>{children}</a>
+  return ({ children, href, ...rest }: { children: React.ReactNode; href: string; [key: string]: any }) => (
+    <a href={href} {...rest}>{children}</a>
   );
 });
 
@@ -71,5 +71,23 @@ describe('ListingCard', () => {
     // The button has aria-label from our previous story
     const deleteBtn = screen.getByLabelText(/delete draft: lekki penthouse/i);
     expect(deleteBtn).toBeInTheDocument();
+  });
+
+  it('renders View Live link with /p/ route, target=_blank, rel=noopener noreferrer, and accessible aria-label', () => {
+    render(<ListingCard property={mockProperty as any} />);
+
+    const liveLink = screen.getByRole('link', { name: /view live lekki penthouse/i });
+    expect(liveLink).toBeInTheDocument();
+    expect(liveLink).toHaveAttribute('href', '/p/lekki-penthouse');
+    expect(liveLink).toHaveAttribute('target', '_blank');
+    expect(liveLink).toHaveAttribute('rel', 'noopener noreferrer');
+  });
+
+  it('renders accessible aria-labels for edit, unpublish, and duplicate buttons', () => {
+    render(<ListingCard property={mockProperty as any} />);
+
+    expect(screen.getByLabelText(/edit lekki penthouse/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/unpublish listing: lekki penthouse/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/duplicate listing: lekki penthouse/i)).toBeInTheDocument();
   });
 });
