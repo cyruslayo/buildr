@@ -125,10 +125,10 @@ export function ProjectCard({ project, onDelete, compact = false }: ProjectCardP
           size="sm"
           onClick={() => onDelete(project.id)}
           className="text-destructive hover:bg-destructive hover:text-destructive-foreground"
-          aria-label="Delete"
+          aria-label={`Delete project: ${project.name}`}
         >
           <Trash2 className="h-3.5 w-3.5" />
-          <span className="sr-only">Delete</span>
+          <span className="sr-only">Delete {project.name}</span>
         </Button>
       </CardFooter>
     </Card>
