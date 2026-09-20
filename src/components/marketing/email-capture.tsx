@@ -45,8 +45,12 @@ export function EmailCapture({ source = 'landing', className }: EmailCaptureProp
 
   if (status === 'success') {
     return (
-      <div className={cn('flex items-center gap-2 text-green-500', className)}>
-        <CheckCircle className="w-5 h-5" />
+      <div
+        role="status"
+        aria-live="polite"
+        className={cn('flex items-center gap-2 text-green-500', className)}
+      >
+        <CheckCircle className="w-5 h-5" aria-hidden="true" />
         <span className="font-medium">You&apos;re on the list! We&apos;ll be in touch.</span>
       </div>
     );
@@ -56,10 +60,14 @@ export function EmailCapture({ source = 'landing', className }: EmailCaptureProp
     <form onSubmit={handleSubmit} className={cn('flex flex-col sm:flex-row gap-3', className)}>
       <div className="flex-1">
         <input
+          id="email-capture-input"
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Enter your email"
+          aria-label="Email address"
+          aria-invalid={status === 'error'}
+          aria-describedby={status === 'error' ? 'email-capture-error' : undefined}
           required
           disabled={status === 'loading'}
           className={cn(
@@ -73,12 +81,15 @@ export function EmailCapture({ source = 'landing', className }: EmailCaptureProp
           )}
         />
         {status === 'error' && (
-          <p className="mt-1 text-sm text-destructive">{errorMessage}</p>
+          <p id="email-capture-error" role="alert" className="mt-1 text-sm text-destructive">
+            {errorMessage}
+          </p>
         )}
       </div>
       <button
         type="submit"
         disabled={status === 'loading'}
+        aria-label={status === 'loading' ? 'Joining early access list...' : 'Get early access'}
         className={cn(
           'px-6 py-3 rounded-lg font-medium',
           'bg-primary text-primary-foreground',
@@ -91,13 +102,13 @@ export function EmailCapture({ source = 'landing', className }: EmailCaptureProp
       >
         {status === 'loading' ? (
           <>
-            <Loader2 className="w-4 h-4 animate-spin" />
+            <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />
             Joining...
           </>
         ) : (
           <>
             Get Early Access
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="w-4 h-4" aria-hidden="true" />
           </>
         )}
       </button>
