@@ -6,7 +6,6 @@
  */
 
 import React, { useTransition } from 'react';
-import Image from 'next/image';
 import { Property, PropertyStatus } from '@prisma/client';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -207,6 +206,7 @@ export function ListingCard({ property, isFeatured = false }: ListingCardProps) 
                     size="sm"
                     className="flex items-center gap-2 text-slate-400 hover:text-red-500 hover:bg-red-50 transition-colors h-12 md:h-8 px-4 md:px-2"
                     title="Unpublish this listing"
+                    aria-label={`Unpublish listing: ${property.title || 'Untitled Property'}`}
                   >
                     <EyeOff className="h-5 w-5 md:h-3.5 md:w-3.5" />
                     <span className="md:inline">Unpublish</span>
@@ -293,11 +293,18 @@ export function ListingCard({ property, isFeatured = false }: ListingCardProps) 
 
           <div className="flex items-center gap-4">
             <Button asChild variant="link" className="p-0 h-auto text-slate-600 hover:text-primary font-semibold">
-              <Link href={`/wizard?id=${property.id}&step=title`}>Edit</Link>
+              <Link href={`/wizard?id=${property.id}&step=title`} aria-label={`Edit ${property.title || 'Untitled Property'}`}>Edit</Link>
             </Button>
             {property.slug && (
               <Button asChild variant="link" className="p-0 h-auto text-primary font-semibold">
-                <Link href={`/property/${property.slug}`} target="_blank">View Live →</Link>
+                <Link
+                  href={`/p/${property.slug}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`View live ${property.title || 'property'} (opens in new tab)`}
+                >
+                  View Live →
+                </Link>
               </Button>
             )}
             <Button 
@@ -307,6 +314,7 @@ export function ListingCard({ property, isFeatured = false }: ListingCardProps) 
               disabled={isPending}
               className="flex items-center gap-2 text-slate-400 hover:text-primary hover:bg-primary/5 transition-colors h-12 md:h-8 px-4 md:px-2"
               title="Duplicate this listing"
+              aria-label={`Duplicate listing: ${property.title || 'Untitled Property'}`}
               data-testid={`duplicate-listing-${property.id}`}
             >
               {isPending ? (
