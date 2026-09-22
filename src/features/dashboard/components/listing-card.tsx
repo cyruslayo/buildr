@@ -6,7 +6,6 @@
  */
 
 import React, { useTransition } from 'react';
-import Image from 'next/image';
 import { Property, PropertyStatus } from '@prisma/client';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -293,11 +292,23 @@ export function ListingCard({ property, isFeatured = false }: ListingCardProps) 
 
           <div className="flex items-center gap-4">
             <Button asChild variant="link" className="p-0 h-auto text-slate-600 hover:text-primary font-semibold">
-              <Link href={`/wizard?id=${property.id}&step=title`}>Edit</Link>
+              <Link
+                href={`/wizard?id=${property.id}&step=title`}
+                aria-label={`Edit property: ${property.title || 'Untitled Property'}`}
+              >
+                Edit
+              </Link>
             </Button>
             {property.slug && (
               <Button asChild variant="link" className="p-0 h-auto text-primary font-semibold">
-                <Link href={`/property/${property.slug}`} target="_blank">View Live →</Link>
+                <Link
+                  href={`/p/${property.slug}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`View live ${property.title || 'Untitled Property'} (opens in new tab)`}
+                >
+                  View Live →
+                </Link>
               </Button>
             )}
             <Button 
