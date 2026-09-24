@@ -34,14 +34,14 @@ jest.mock('next/link', () => {
 // Mock Framer Motion to avoid animation issues in tests
 jest.mock('framer-motion', () => ({
   motion: {
-    div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
+    div: ({ children, ...props }: React.HTMLAttributes<HTMLDivElement>) => <div {...props}>{children}</div>,
   },
-  AnimatePresence: ({ children }: any) => <>{children}</>,
+  AnimatePresence: ({ children }: { children: React.ReactNode }) => <>{children}</>,
 }));
 
 describe('ListingCard', () => {
   it('renders property title and formatted price', () => {
-    render(<ListingCard property={mockProperty as any} />);
+    render(<ListingCard property={mockProperty as unknown as React.ComponentProps<typeof ListingCard>['property']} />);
     
     expect(screen.getByText('Lekki Penthouse')).toBeInTheDocument();
     // Currency format for NGN 150,000,000 - exact string depends on locale, 
@@ -50,23 +50,30 @@ describe('ListingCard', () => {
   });
 
   it('renders the "Edit" button linking to the wizard', () => {
-    render(<ListingCard property={mockProperty as any} />);
+    render(<ListingCard property={mockProperty as unknown as React.ComponentProps<typeof ListingCard>['property']} />);
     
     const editLink = screen.getByRole('link', { name: /edit/i });
     expect(editLink).toHaveAttribute('href', expect.stringContaining('/wizard?id=prop-1'));
   });
 
   it('applies featured classes when isFeatured is true', () => {
-    const { container } = render(<ListingCard property={mockProperty as any} isFeatured={true} />);
+    const { container } = render(<ListingCard property={mockProperty as unknown as React.ComponentProps<typeof ListingCard>['property']} isFeatured={true} />);
     
     // Check for flex layout on the card
     const card = container.querySelector('.lg\\:flex');
     expect(card).toBeInTheDocument();
   });
 
+  it('renders "View Live" link pointing to /p/[slug] for published properties', () => {
+    render(<ListingCard property={mockProperty as unknown as React.ComponentProps<typeof ListingCard>['property']} />);
+
+    const liveLink = screen.getByRole('link', { name: /view live lekki penthouse/i });
+    expect(liveLink).toHaveAttribute('href', '/p/lekki-penthouse');
+  });
+
   it('has accessible individual delete button for drafts', () => {
     const draftProperty = { ...mockProperty, status: PropertyStatus.DRAFT };
-    render(<ListingCard property={draftProperty as any} />);
+    render(<ListingCard property={draftProperty as unknown as React.ComponentProps<typeof ListingCard>['property']} />);
     
     // The button has aria-label from our previous story
     const deleteBtn = screen.getByLabelText(/delete draft: lekki penthouse/i);
