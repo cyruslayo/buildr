@@ -103,6 +103,8 @@ export function Navbar({ showDashboard = false }: NavbarProps) {
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="lg:hidden p-2 text-slate-900 hover:text-emerald-700 transition-colors"
               aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-menu"
             >
               {isMobileMenuOpen ? (
                 <X className="w-6 h-6" />
@@ -129,6 +131,9 @@ export function Navbar({ showDashboard = false }: NavbarProps) {
             
             {/* Drawer */}
             <motion.div
+              id="mobile-menu"
+              role="region"
+              aria-label="Mobile navigation"
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
