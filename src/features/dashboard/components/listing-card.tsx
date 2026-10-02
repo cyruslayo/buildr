@@ -6,7 +6,6 @@
  */
 
 import React, { useTransition } from 'react';
-import Image from 'next/image';
 import { Property, PropertyStatus } from '@prisma/client';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -297,7 +296,14 @@ export function ListingCard({ property, isFeatured = false }: ListingCardProps) 
             </Button>
             {property.slug && (
               <Button asChild variant="link" className="p-0 h-auto text-primary font-semibold">
-                <Link href={`/property/${property.slug}`} target="_blank">View Live →</Link>
+                <Link
+                  href={`/p/${property.slug}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`View live ${property.title || 'listing'} (opens in new tab)`}
+                >
+                  View Live →
+                </Link>
               </Button>
             )}
             <Button 
