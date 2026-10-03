@@ -6,7 +6,6 @@
  */
 
 import React, { useTransition } from 'react';
-import Image from 'next/image';
 import { Property, PropertyStatus } from '@prisma/client';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -207,6 +206,7 @@ export function ListingCard({ property, isFeatured = false }: ListingCardProps) 
                     size="sm"
                     className="flex items-center gap-2 text-slate-400 hover:text-red-500 hover:bg-red-50 transition-colors h-12 md:h-8 px-4 md:px-2"
                     title="Unpublish this listing"
+                    aria-label={`Unpublish listing: ${property.title || 'Untitled Property'}`}
                   >
                     <EyeOff className="h-5 w-5 md:h-3.5 md:w-3.5" />
                     <span className="md:inline">Unpublish</span>
@@ -297,7 +297,14 @@ export function ListingCard({ property, isFeatured = false }: ListingCardProps) 
             </Button>
             {property.slug && (
               <Button asChild variant="link" className="p-0 h-auto text-primary font-semibold">
-                <Link href={`/property/${property.slug}`} target="_blank">View Live →</Link>
+                <Link
+                  href={`/p/${property.slug}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`View live listing for ${property.title || 'Untitled Property'} (opens in new tab)`}
+                >
+                  View Live →
+                </Link>
               </Button>
             )}
             <Button 
