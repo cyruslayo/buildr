@@ -63,8 +63,13 @@ export function PromptInput({
     }
   }, [value]);
 
+  const id = React.useId();
+  const counterId = `${id}-counter`;
+  const hintId = `${id}-hint`;
+
   const characterCount = value.length;
-  const isNearLimit = characterCount > maxLength * 0.8;
+  const isNearLimit = characterCount >= maxLength * 0.8;
+  const isAtCapacity = characterCount >= maxLength * 0.9;
 
   return (
     <div className={cn('relative w-full', className)}>
@@ -76,6 +81,9 @@ export function PromptInput({
           onKeyDown={handleKeyDown}
           placeholder={placeholder}
           disabled={isLoading}
+          aria-label="Content description or enhancement prompt"
+          aria-busy={isLoading}
+          aria-describedby={`${counterId} ${hintId}`}
           className={cn(
             'min-h-[80px] resize-none pr-14 pb-8',
             'transition-all duration-300',
@@ -100,19 +108,24 @@ export function PromptInput({
           aria-label="Enhance content"
         >
           {isLoading ? (
-            <Loader2 className="h-4 w-4 animate-spin" />
+            <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
           ) : (
-            <Send className="h-4 w-4" />
+            <Send className="h-4 w-4" aria-hidden="true" />
           )}
         </Button>
 
         {/* Character Count */}
         <div
+          id={counterId}
           className={cn(
             'absolute bottom-2 right-2 text-xs',
             'transition-colors duration-200',
-            isNearLimit ? 'text-amber-500' : 'text-muted-foreground',
-            characterCount >= maxLength && 'text-destructive'
+            isAtCapacity
+              ? 'text-destructive font-medium'
+              : isNearLimit
+              ? 'text-amber-500 font-medium'
+              : 'text-muted-foreground',
+            characterCount >= maxLength && 'text-destructive font-bold'
           )}
         >
           {characterCount}/{maxLength}
@@ -120,7 +133,7 @@ export function PromptInput({
       </div>
 
       {/* Keyboard Hint */}
-      <div className="mt-1 text-xs text-muted-foreground">
+      <div id={hintId} className="mt-1 text-xs text-muted-foreground">
         Press <kbd className="px-1 py-0.5 rounded bg-muted text-muted-foreground">Ctrl</kbd> + <kbd className="px-1 py-0.5 rounded bg-muted text-muted-foreground">Enter</kbd> to submit
       </div>
     </div>
