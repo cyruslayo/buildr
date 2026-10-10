@@ -72,4 +72,18 @@ describe('ListingCard', () => {
     const deleteBtn = screen.getByLabelText(/delete draft: lekki penthouse/i);
     expect(deleteBtn).toBeInTheDocument();
   });
+
+  it('renders "View Live" link pointing to /p/[slug] with accessible aria-label', () => {
+    render(<ListingCard property={mockProperty as any} />);
+
+    const liveLink = screen.getByRole('link', { name: /view live lekki penthouse/i });
+    expect(liveLink).toHaveAttribute('href', '/p/lekki-penthouse');
+  });
+
+  it('provides accessible aria-label on action buttons', () => {
+    render(<ListingCard property={mockProperty as any} />);
+
+    expect(screen.getByLabelText(/unpublish lekki penthouse/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/duplicate lekki penthouse/i)).toBeInTheDocument();
+  });
 });
