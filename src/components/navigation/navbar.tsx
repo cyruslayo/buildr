@@ -102,6 +102,7 @@ export function Navbar({ showDashboard = false }: NavbarProps) {
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="lg:hidden p-2 text-slate-900 hover:text-emerald-700 transition-colors"
+              aria-expanded={isMobileMenuOpen}
               aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
             >
               {isMobileMenuOpen ? (
