@@ -94,16 +94,22 @@ describe('ProjectCard', () => {
     expect(screen.getByText(/listing/i)).toBeInTheDocument();
   });
 
-  it('has edit link to project', () => {
+  it('has edit link to project with item identifier in aria-label', () => {
     render(<ProjectCard project={mockProject} onDelete={mockOnDelete} />);
-    const editLink = screen.getByRole('link', { name: /edit/i });
+    const editLink = screen.getByRole('link', { name: `Edit project: ${mockProject.name}` });
     expect(editLink).toHaveAttribute('href', '/builder/proj_1');
   });
 
-  it('has delete button', () => {
+  it('has delete button with item identifier in aria-label', () => {
     render(<ProjectCard project={mockProject} onDelete={mockOnDelete} />);
-    const deleteButton = screen.getByRole('button', { name: /delete/i });
+    const deleteButton = screen.getByRole('button', { name: `Delete project: ${mockProject.name}` });
     expect(deleteButton).toBeInTheDocument();
+  });
+
+  it('provides item identifier on edit link in compact mode', () => {
+    render(<ProjectCard project={mockProject} onDelete={mockOnDelete} compact />);
+    const editLink = screen.getByRole('link', { name: `Edit project: ${mockProject.name}` });
+    expect(editLink).toBeInTheDocument();
   });
 
   it('calls onDelete when delete button clicked', () => {
