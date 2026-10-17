@@ -34,6 +34,6 @@ describe('WhatsAppFloatingButton', () => {
   it('has accessible label', () => {
     render(<WhatsAppFloatingButton phone="2348012345678" />);
     const link = screen.getByRole('link');
-    expect(link).toHaveAttribute('aria-label', 'Chat on WhatsApp');
+    expect(link).toHaveAttribute('aria-label', 'Chat on WhatsApp (opens in new tab)');
   });
 });
