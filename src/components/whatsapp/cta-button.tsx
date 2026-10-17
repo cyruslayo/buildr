@@ -25,6 +25,7 @@ export function WhatsAppCTAButton({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
+      aria-label={`${label} (opens in new tab)`}
       className={cn(
         // Flexbox layout
         'inline-flex items-center gap-2',
@@ -35,6 +36,8 @@ export function WhatsAppCTAButton({
         // Transition
         'transition-all duration-300',
         'hover:scale-105',
+        // Focus state for keyboard accessibility
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2',
         className
       )}
       style={{

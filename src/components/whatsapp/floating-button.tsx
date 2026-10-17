@@ -23,7 +23,7 @@ export function WhatsAppFloatingButton({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Chat on WhatsApp"
+      aria-label="Chat on WhatsApp (opens in new tab)"
       className={cn(
         // Fixed position - bottom right
         'fixed bottom-6 right-6',
@@ -38,6 +38,8 @@ export function WhatsAppFloatingButton({
         // Transitions
         'transition-all duration-300',
         'hover:scale-110',
+        // Focus state for keyboard accessibility
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2',
         className
       )}
       style={{
