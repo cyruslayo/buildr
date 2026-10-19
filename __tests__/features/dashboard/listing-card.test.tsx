@@ -49,11 +49,20 @@ describe('ListingCard', () => {
     expect(screen.getByText(/₦/)).toBeInTheDocument();
   });
 
-  it('renders the "Edit" button linking to the wizard', () => {
+  it('renders the "Edit" button linking to the wizard with aria-label', () => {
     render(<ListingCard property={mockProperty as any} />);
     
-    const editLink = screen.getByRole('link', { name: /edit/i });
+    const editLink = screen.getByRole('link', { name: /edit property: lekki penthouse/i });
     expect(editLink).toHaveAttribute('href', expect.stringContaining('/wizard?id=prop-1'));
+  });
+
+  it('renders the "View Live" link pointing to /p/[slug] with accessibility attributes', () => {
+    render(<ListingCard property={mockProperty as any} />);
+
+    const liveLink = screen.getByRole('link', { name: /view live lekki penthouse \(opens in new tab\)/i });
+    expect(liveLink).toHaveAttribute('href', '/p/lekki-penthouse');
+    expect(liveLink).toHaveAttribute('target', '_blank');
+    expect(liveLink).toHaveAttribute('rel', 'noopener noreferrer');
   });
 
   it('applies featured classes when isFeatured is true', () => {
