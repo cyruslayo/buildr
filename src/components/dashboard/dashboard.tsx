@@ -10,9 +10,8 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Plus, FolderOpen, Sparkles, ArrowRight } from 'lucide-react';
+import { Plus, Sparkles, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
 import { ProjectCard } from './project-card';
 
 interface Project {
@@ -126,6 +125,7 @@ export function Dashboard({ projects }: DashboardProps) {
                     <button
                       onClick={() => handleDelete(featuredProject.id)}
                       className="ml-auto text-sm text-slate-400 hover:text-red-600 transition-colors"
+                      aria-label={`Delete project: ${featuredProject.name}`}
                     >
                       Delete
                     </button>
