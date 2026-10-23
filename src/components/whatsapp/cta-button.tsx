@@ -25,6 +25,7 @@ export function WhatsAppCTAButton({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
+      aria-label={`${label} (opens in new tab)`}
       className={cn(
         // Flexbox layout
         'inline-flex items-center gap-2',

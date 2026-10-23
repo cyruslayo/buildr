@@ -30,5 +30,6 @@ describe('WhatsAppCTAButton', () => {
     const link = screen.getByRole('link');
     expect(link).toHaveAttribute('target', '_blank');
     expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+    expect(link).toHaveAttribute('aria-label', 'Chat on WhatsApp (opens in new tab)');
   });
 });

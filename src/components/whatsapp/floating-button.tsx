@@ -23,7 +23,7 @@ export function WhatsAppFloatingButton({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Chat on WhatsApp"
+      aria-label="Chat on WhatsApp (opens in new tab)"
       className={cn(
         // Fixed position - bottom right
         'fixed bottom-6 right-6',
