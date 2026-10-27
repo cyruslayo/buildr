@@ -26,8 +26,8 @@ const mockProperty = {
 
 // Mock Next.js Link
 jest.mock('next/link', () => {
-  return ({ children, href }: { children: React.ReactNode; href: string }) => (
-    <a href={href}>{children}</a>
+  return ({ children, href, ...props }: { children: React.ReactNode; href: string; [key: string]: any }) => (
+    <a href={href} {...props}>{children}</a>
   );
 });
 
@@ -71,5 +71,14 @@ describe('ListingCard', () => {
     // The button has aria-label from our previous story
     const deleteBtn = screen.getByLabelText(/delete draft: lekki penthouse/i);
     expect(deleteBtn).toBeInTheDocument();
+  });
+
+  it('renders the "View Live" link pointing to /p/[slug] with security and accessibility attributes', () => {
+    render(<ListingCard property={mockProperty as any} />);
+
+    const liveLink = screen.getByRole('link', { name: /view live: lekki penthouse/i });
+    expect(liveLink).toHaveAttribute('href', '/p/lekki-penthouse');
+    expect(liveLink).toHaveAttribute('target', '_blank');
+    expect(liveLink).toHaveAttribute('rel', 'noopener noreferrer');
   });
 });
